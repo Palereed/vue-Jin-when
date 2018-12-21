@@ -1,0 +1,187 @@
+<template>
+  <div class="notes-wrap">
+    <ul class="topnav">
+      <li v-for="(item,index) in navList" :key="item.id" :class="{'active': index === navIndex}">
+        <span>{{item}}</span>
+        <span>{{item}}</span>
+      </li>
+    </ul>
+    <div class="article-wrap">
+      <article>
+        <a href="javascript:;" class="title">
+          关于跨域数据请求的一些絮叨
+        </a>
+        <p class="info-wrap">
+          <span>标签：Vue</span>
+          <span>时间：2018-09-03</span>
+          <span>作者：蒹葭</span>
+          <span>备注：原创</span>
+        </p>
+        <div class="watch">
+          <i class="icon-eye"></i>
+          <span>37</span>
+        </div>
+        <div class="content">
+          <h2>跨域数据请求</h2>
+          <p>最近在看huangyi老师的vue音乐播放器视频，其中的跨域数据请求因为视频距现在已经过去1年，qq音乐许多接口已经改变，因此在跨域过程中有许多坑需要解决，这里..</p>
+        </div>
+        <a href="javascript:;" class="whole-btn">展开全文</a>
+        <div class="ArclBttom">
+          <a href="" class="ArclShow"></a>
+        </div>
+      </article>
+      <article>
+        <a href="javascript:;" class="title">
+          关于跨域数据请求的一些絮叨
+        </a>
+        <p class="info-wrap">
+          <span>标签：Vue</span>
+          <span>时间：2018-09-03</span>
+          <span>作者：蒹葭</span>
+          <span>备注：原创</span>
+        </p>
+        <div class="watch">
+          <i class="icon-eye"></i>
+          <span>37</span>
+        </div>
+        <div class="content">
+          <h2>跨域数据请求</h2>
+          <p>最近在看huangyi老师的vue音乐播放器视频，其中的跨域数据请求因为视频距现在已经过去1年，qq音乐许多接口已经改变，因此在跨域过程中有许多坑需要解决，这里..</p>
+        </div>
+        <a href="javascript:;" class="whole-btn">展开全文</a>
+        <div class="ArclBttom">
+          <a href="" class="ArclShow"></a>
+        </div>
+      </article>
+    </div>
+    <div class="pagination">
+      <a href="" class="disable">前页</a>
+      <span>1</span>
+      <a href="">后页</a>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      // 分类索引
+      navIndex: 0
+    }
+  },
+  created () {
+    this.navList = ['全部', 'Css', 'js', 'vue', 'node', '其他']
+  }
+}
+</script>
+
+<style lang="stylus" rel="stylesheet/stylus">
+  @import '~common/stylus/variable'
+  .topnav
+    display: flex
+    height: 100px
+    justify-content: space-between
+    flex-wrap: wrap
+    align-content: space-evenly
+    align-items: center
+    li
+      width: 14%
+      text-align: center
+      height: 32px
+      line-height: 32px
+      cursor: pointer
+      overflow: hidden
+      position: relative
+      border-radius: 3px
+      &.active,&:hover
+        span
+          &:nth-child(2)
+            transform: translate3d(100%, 0, 0)
+      span
+        width: 100%
+        height: 32px
+        position: absolute
+        top: 0
+        left: 0
+        transition: transform .3s
+        &:nth-child(1)
+          background: $home-navbg
+          color: #fff
+        &:nth-child(2)
+          background: $home-thingray
+  .article-wrap
+    padding-top: 40px
+    article
+      padding-bottom: 40px
+      border-bottom: 1px solid $home-line
+      margin-bottom: 50px
+      position: relative
+      .title
+        font-weight: 700
+        font-size: $font-title
+        position: relative
+        display: inline-block
+        &:before
+          position: absolute
+          width: 0
+          content: ""
+          height: 2px
+          bottom: -5px
+          left: 0
+          background: #313d4b
+          transition: width 0.6s
+        &:hover
+          &:before
+            width: 100%
+      .info-wrap
+        padding: 20px 0
+        color: $home-gray
+        span
+          margin-right: 20px
+      .watch
+        position: absolute
+        top: 60px
+        right: 0
+        display: flex
+        flex-direction: column
+        width: 30px
+        align-items: center
+        i
+          font-size: $font-middle
+        span
+          margin-top: 5px
+          font-size: $font-default
+      .content
+        border-left: 3px solid $home-thingray
+        padding-left: 30px
+        margin: 20px 0 30px 0
+        line-height: $font-title
+        font-size: $font-normal
+        text-align: justify
+        letter-spacing: 1.5px
+        h2
+          font-size: $font-middle
+          font-weight: 700
+          margin: 10px 0 20px 0
+      .whole-btn
+        font-size: 16px
+        padding: 10px 0 10px 33px
+        text-decoration: underline
+  .pagination
+    margin-bottom: 20px
+    font-size: $font-normal
+    a
+      &.disable
+        color: $home-gray
+    span
+      display: inline-block
+      padding: 0 10px
+      line-height: 30px
+      text-align: center
+      border-radius: 2px
+      cursor: pointer
+      background: $home-navbg
+      margin: 0 10px
+      color: #fff
+</style>
