@@ -7,7 +7,9 @@
       <div class="title">
         <span @click="returnHome">{{title}}<i>{{desc}}</i></span>
       </div>
-      <div class="avatar"></div>
+      <div class="avatar-wrap">
+        <div class="avatar"></div>
+      </div>
       <div class="navlist">
         <router-link to="/home/notes">
           <span>前端那些事</span>
@@ -87,9 +89,6 @@ export default {
       display: flex
       flex-direction: column
       align-items: center
-      justify-content: space-around
-      box-sizing: border-box
-      padding-bottom: 5%
       transition: transform .5s
       &.close
         transform: translate3d(-($nav-width), 0, 0)
@@ -101,18 +100,25 @@ export default {
         cursor: pointer
       .title
         font-size: $font-big
-        cursor: pointer
+        display: flex
+        flex-grow: .4
+        align-items: center
         i
           font-size: $font-default
           font-style: normal
-      .avatar
-        width: 180px;
-        height: 180px;
-        border-radius: 100px;
-        background: url("/static/images/maomi.jpg") no-repeat center;
-        background-size: 180px;
-        border: 8px solid rgba(10, 10, 10, 0.2);
-        box-sizing: border-box
+        span
+          cursor: pointer
+      .avatar-wrap
+        display: flex
+        flex-grow: .2
+        .avatar
+          width: 180px;
+          height: 180px;
+          border-radius: 100px;
+          background: url("/static/images/maomi.jpg") no-repeat center;
+          background-size: 180px;
+          border: 8px solid rgba(10, 10, 10, 0.2);
+          box-sizing: border-box
       .navlist
         width: 180px
         a

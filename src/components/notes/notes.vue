@@ -78,110 +78,111 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
-  .topnav
-    display: flex
-    height: 100px
-    justify-content: space-between
-    flex-wrap: wrap
-    align-content: space-evenly
-    align-items: center
-    li
-      width: 14%
-      text-align: center
-      height: 32px
-      line-height: 32px
-      cursor: pointer
-      overflow: hidden
-      position: relative
-      border-radius: 3px
-      &.active,&:hover
-        span
-          &:nth-child(2)
-            transform: translate3d(100%, 0, 0)
-      span
-        width: 100%
+  .notes-wrap
+    .topnav
+      display: flex
+      height: 100px
+      justify-content: space-between
+      flex-wrap: wrap
+      align-content: space-evenly
+      align-items: center
+      li
+        width: 14%
+        text-align: center
         height: 32px
-        position: absolute
-        top: 0
-        left: 0
-        transition: transform .3s
-        &:nth-child(1)
-          background: $home-navbg
-          color: #fff
-        &:nth-child(2)
-          background: $home-thingray
-  .article-wrap
-    padding-top: 40px
-    article
-      padding-bottom: 40px
-      border-bottom: 1px solid $home-line
-      margin-bottom: 50px
-      position: relative
-      .title
-        font-weight: 700
-        font-size: $font-title
+        line-height: 32px
+        cursor: pointer
+        overflow: hidden
         position: relative
-        display: inline-block
-        &:before
+        border-radius: 3px
+        &.active,&:hover
+          span
+            &:nth-child(2)
+              transform: translate3d(100%, 0, 0)
+        span
+          width: 100%
+          height: 32px
           position: absolute
-          width: 0
-          content: ""
-          height: 2px
-          bottom: -5px
+          top: 0
           left: 0
-          background: #313d4b
-          transition: width 0.6s
-        &:hover
-          &:before
-            width: 100%
-      .info-wrap
-        padding: 20px 0
-        color: $home-gray
-        span
-          margin-right: 20px
-      .watch
-        position: absolute
-        top: 60px
-        right: 0
-        display: flex
-        flex-direction: column
-        width: 30px
-        align-items: center
-        i
-          font-size: $font-middle
-        span
-          margin-top: 5px
-          font-size: $font-default
-      .content
-        border-left: 3px solid $home-thingray
-        padding-left: 30px
-        margin: 20px 0 30px 0
-        line-height: $font-title
-        font-size: $font-normal
-        text-align: justify
-        letter-spacing: 1.5px
-        h2
-          font-size: $font-middle
+          transition: transform .3s
+          &:nth-child(1)
+            background: $home-navbg
+            color: $home-bg
+          &:nth-child(2)
+            background: $home-thingray
+    .article-wrap
+      padding-top: 40px
+      article
+        padding-bottom: 40px
+        border-bottom: 1px solid $home-line
+        margin-bottom: 50px
+        position: relative
+        .title
           font-weight: 700
-          margin: 10px 0 20px 0
-      .whole-btn
-        font-size: 16px
-        padding: 10px 0 10px 33px
-        text-decoration: underline
-  .pagination
-    margin-bottom: 20px
-    font-size: $font-normal
-    a
-      &.disable
-        color: $home-gray
-    span
-      display: inline-block
-      padding: 0 10px
-      line-height: 30px
-      text-align: center
-      border-radius: 2px
-      cursor: pointer
-      background: $home-navbg
-      margin: 0 10px
-      color: #fff
+          font-size: $font-title
+          position: relative
+          display: inline-block
+          &:before
+            position: absolute
+            width: 0
+            content: ""
+            height: 2px
+            bottom: -5px
+            left: 0
+            background: $home-font
+            transition: width 0.6s
+          &:hover
+            &:before
+              width: 100%
+        .info-wrap
+          padding: 20px 0
+          color: $home-gray
+          span
+            margin-right: 20px
+        .watch
+          position: absolute
+          top: 60px
+          right: 0
+          display: flex
+          flex-direction: column
+          width: 30px
+          align-items: center
+          i
+            font-size: $font-middle
+          span
+            margin-top: 5px
+            font-size: $font-default
+        .content
+          border-left: 3px solid $home-thingray
+          padding-left: 30px
+          margin: 20px 0 30px 0
+          line-height: $font-title
+          font-size: $font-normal
+          text-align: justify
+          letter-spacing: 1.5px
+          h2
+            font-size: $font-middle
+            font-weight: 700
+            margin: 10px 0 20px 0
+        .whole-btn
+          font-size: 16px
+          padding: 10px 0 10px 33px
+          text-decoration: underline
+    .pagination
+      margin: -20px 0 20px 0
+      font-size: $font-normal
+      a
+        &.disable
+          color: $home-gray
+      span
+        display: inline-block
+        padding: 0 10px
+        line-height: 30px
+        text-align: center
+        border-radius: 2px
+        cursor: pointer
+        background: $home-navbg
+        margin: 0 10px
+        color: $home-bg
 </style>

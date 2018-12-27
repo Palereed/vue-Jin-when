@@ -22,114 +22,80 @@
           </span>
           <p>说好的更新，未完待续呢</p>
         </div>
-        <div class="answer-number">
+        <div class="answer-number" @click="toggleAnswer">
           <i class="icon-comment-o"></i>
-          <span>0</span>
+          <span>{{commentText}}</span>
         </div>
       </div>
       <!-- 留言回复 -->
-      <div class="answer">
-        <div class="avatar">
-          <img src="../../common/images/visit4.jpg">
-        </div>
-        <div class="content">
-          <span class="name">非酋</span>
-          <span class="time">
-            留言于<b>2018-08-22 15:16:26</b>
-          </span>
-          <p>说好的更新，未完待续呢</p>
+      <div class="answer" v-show="seeAnswer">
+        <div class="answer-wrap">
+          <div class="avatar">
+            <img src="../../common/images/visit4.jpg">
+          </div>
+          <div class="content">
+            <span class="name">非酋</span>
+            <span class="time">
+              留言于<b>2018-08-22 15:16:26</b>
+            </span>
+            <p>说好的更新，未完待续呢</p>
+          </div>
         </div>
         <!-- 留言回复表单 -->
         <div class="answer-form">
-          <form>
-              <ul class="FormList">
-                <input type='hidden' value="5b7d0dcae289e134e58cbf3d" name="messageId">
-                <li><span>内容：</span><textarea class="form-control" name="content"></textarea></li>
-                <div class="WarningHold">
-                  <div>
-                    <i></i>
-                    <span></span>
-                  </div>
-                </div>
-                <li><button type="button" class="btn btn-default">回复</button></li>
-              </ul>
-            </form> 
+          <div class="for-just">
+            <el-button size="medium" plain @click="answerForm">{{toAnswer}}</el-button>
+          </div>
+          <el-form label-width="60px" label-position="left" v-show="showAnswerForm">
+            <el-form-item label="内容：">
+              <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button size="medium" plain>回复</el-button>
+            </el-form-item>
+          </el-form>
         </div>
       </div>
     </div>
     <!-- 分页部分 -->
-    <div class="PageNumber">
-        <a href="javascript:;" class="CantUse">前页</a>
-          
-        <a class="Active">1</a>
-          
-        <a href="javascript:;" class="CantUse">后页</a>
+    <div class="pagination">
+      <a href="" class="disable">前页</a>
+      <span>1</span>
+      <a href="">后页</a>
     </div>
-    <!-- 留言表单 -->
-    <div class="TopTab">
-      <div class="TabName">留言板</div>
-      <div class="LandInfo">
-          <!-- 管理员登陆 -->
-          <span><b id="Landon"><i class="fa fa-sign-in"></i>登录后留言</b></span>
-          <div class="OnLand"></div>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-    <div class="LeaveContain">
-      <div class="VisitLand" id="Land">
-          <form>
-              <ul class="FormList">
-                <li><span>账号：</span><input class="form-control" name="visitname"></li>
-                <li><span>密码：</span><input type="password" class="form-control" name="visitpass"></li>
-                <div class="LandBtn">
-                    <div>
-                      <i></i>
-                      <span></span>
-                    </div>
-                </div>
-                <li><button type="button" class="btn btn-default">登陆</button>
-                    <button type="button" class="btn btn-default">注册</button>
-                </li>
-              </ul>
-          </form>
-      </div>
-      <div class="VisitRegister" id="Register">
-          <form>
-          <ul class="FormList">
-              <li><span>账号：</span><input class="form-control" name="visitname"></li>
-              <li><span>昵称：</span><input class="form-control" name="visitmark"></li>
-              <li><span>密码：</span><input type="password" class="form-control" name="visitpass"></li>
-              <li><span>头像：</span><img src="/public/images/message/visit4.jpg" id="ShowImg"></li>
-              <li id="ImgChoose">
-                    <span>选择：</span>
-                    <img src="/public/images/message/visit1.jpg">
-                    <img src="/public/images/message/visit2.jpg">
-                    <img src="/public/images/message/visit3.jpg">
-                    <img src="/public/images/message/visit4.jpg">
-                    <img src="/public/images/message/visit5.jpg">
-                    <img src="/public/images/message/visit6.jpg">
-                    <img src="/public/images/message/visit7.jpg">
-                    <img src="/public/images/message/visit8.jpg">
-              </li>
-              <li><span>密保：</span><input class="form-control" name="visitsafe"></li>
-              <div class="RegisterBtn">
-                <div>
-                  <i></i>
-                  <span></span>
-                </div>
-              </div>
-              <li><button type="button" class="btn btn-default">注册</button></li>
-          </ul>
-          </form>
-      </div>
-      
-    </div>
-  
+    <!-- 留言部分 -->
+    <board></board>
   </div>
 </template>
 
 <script>
+import Board from 'components/message-board/board';
 export default {
+  data () {
+    return {
+      answerNumber: 0,
+      seeAnswer: false,
+      commentText: '',
+      showAnswerForm: false,
+      toAnswer: '我要回复'
+    }
+  },
+  created () {
+    this.commentText = this.answerNumber
+  },
+  methods: {
+    toggleAnswer: function () {
+      this.seeAnswer === true ? this.commentText = this.answerNumber : this.commentText = '收起'
+      this.seeAnswer = !this.seeAnswer
+    },
+    answerForm: function () {
+      this.showAnswerForm === true ? this.toAnswer = '我要回复' : this.toAnswer = '稍后回复'
+      this.showAnswerForm = !this.showAnswerForm
+    }
+  },
+  components: {
+    Board
+  }
 }
 </script>
 
@@ -162,8 +128,10 @@ export default {
           margin-bottom: 10px
     .message
       border-bottom: 1px solid $home-line
-      padding: 20px 0
-      .letter,.answer
+      padding-top: 20px
+      .letter
+        margin-bottom: 20px
+      .letter,.answer-wrap
         display: flex
         .avatar
           width: 65px
@@ -201,59 +169,25 @@ export default {
           flex-direction: column
           justify-content: space-between
           span
-            font-size: $font-default      
+            font-size: $font-default
       .answer
-        padding: 20px 0 0 85px
-        
-
-/* 留言回复 */
-.AllAnswer{padding-left:10%;}
-.Answerit{display:inline-block;
-          padding:6px 12px;
-          color: #333;
-          border:1px solid #ccc;
-          border-radius:4px;
-          margin:0 0 20px 0;
-          cursor:pointer;}
-.AnswerForm  button{margin:0 0 20px 55px !important;}   
-.AnswerForm .alert{margin-left:55px;}       
-
-/* 留言板 */ 
-.TopTab{border-bottom: 1px solid #e0e0e0;
-        height:52px;
-        margin:20px 0;
-        position:relative;} 
-.TabName{position:absolute;bottom:10px;}        
-.LandInfo{float:right;position:relative;}        
-.LandInfo span{display:inline-block;
-                width:200px;
-                text-align:right;
-                position:absolute;
-                bottom:10px;
-                right:60px;
-                font-size:14px;
-                line-height:14px;}
-.LandInfo b{font-weight:500;cursor:pointer;} 
-.LandInfo a:hover,.LandInfo b:hover{color:red}               
-.LandInfo i{margin:0 5px 0 10px;font-size:16px}
-.OnLand{width:50px;height:50px;border-radius:25px;background:#eee;border-radius:25px;cursor:pointer;}  
-.LandInfo img{width:50px;border-radius:25px;}  
-.alert{padding:8px 12px;margin:0 0 20px 60px;width:55%;}
-.alert i{margin:0 10px 0 0;}
-/* 留言form */
-.FormList li{margin:0 0 20px 0;}
-.FormList li:last-child{margin:0;}
-.FormList li span{display:block;width:7%;line-height:34px;float:left;text-align:left;}
-#ShowImg{width:100px;height:100px;border-radius:50px;cursor:pointer;border: 2px solid rgba(10,10,10,0.1);}
-#ImgChoose{display:none;}
-#ImgChoose img{width:80px;height:80px;border-radius:40px;cursor:pointer;}
-textarea.form-control{resize:none;height:100px;width:93%;}
-button{margin-left:60px;outline:none !important;}
-form button:nth-child(2){margin-left:0px;}
-.form-control{width:55%;display:inline-block;}
-@media screen and (max-width: 365px){
-    .Messagetop p{margin-top:-2px;}
-}  
-/* 登陆与注册 */     
-#Register{display:none;}
+        padding-left: 85px
+        .answer-wrap
+          margin-bottom: 20px
+    .pagination
+      margin-top: 30px
+      font-size: $font-normal
+      a
+        &.disable
+          color: $home-gray
+      span
+        display: inline-block
+        padding: 0 10px
+        line-height: 30px
+        text-align: center
+        border-radius: 2px
+        cursor: pointer
+        background: $home-navbg
+        margin: 0 10px
+        color: $home-bg
 </style>
