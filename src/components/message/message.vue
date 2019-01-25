@@ -59,9 +59,9 @@
     </div>
     <!-- 分页部分 -->
     <div class="pagination">
-      <a href="" class="disable">前页</a>
+      <a href="javascript:;" class="disable">前页</a>
       <span>1</span>
-      <a href="">后页</a>
+      <a href="javascript:;">后页</a>
     </div>
     <!-- 留言部分 -->
     <board></board>
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import Board from 'components/message-board/board';
+import Board from 'components/message-board/board'
 export default {
   data () {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div class="record-wrap">
-    <div class="topdesc">
+    <div class="toptalk">
       <i class="icon-quote-left"></i>
       <p>{{title}}</p>
       <i class="icon-quote-right"></i>
@@ -73,26 +73,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
   .record-wrap
-    .topdesc
-      width: 100%
-      height: 100px
-      padding: 20px
-      box-sizing: border-box
-      position: relative
-      text-align: center
-      font-size: $font-just
-      p
-        line-height: 60px
-        font-weight: 700
-      .icon-quote-left,.icon-quote-right
-        font-size: $font-normal
-        position: absolute
-      .icon-quote-left
-        top: 20px
-        left: 0
-      .icon-quote-right
-        bottom: 20px
-        right: 0
     .event-wrap
       margin-top: 30px
       position: relative

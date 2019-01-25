@@ -4,7 +4,7 @@
       <div class="title">
         <h2>{{title}}</h2>
         <div class="login">
-          <span><i class="icon-sign-in"></i>{{warning}}</span>
+          <span @click="toggleLogin"><i class="icon-sign-in"></i>{{warning}}</span>
           <div class="login-btn">
             <img src="../../common/images/owner.jpg">
           </div>
@@ -12,16 +12,16 @@
       </div>
       <div class="form-wrap">
         <!-- leave -->
-        <el-form label-width="60px" label-position="left">
-          <el-form-item label="内容：">
-            <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}"></el-input>
+        <el-form label-width="60px" label-position="left" class="leave-form" :model="leaveForm" :rules="rulesLeave" v-show="leaveShow">
+          <el-form-item label="内容：" prop="userleave">
+            <el-input type="textarea" v-model="leaveForm.userleave" :autosize="{ minRows: 3, maxRows: 5}"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button size="medium" plain>留言</el-button>
           </el-form-item>
         </el-form>
         <!-- login -->
-        <el-form label-width="60px" label-position="left" class="login-form" :model="loginForm" :rules="rulesLogin">
+        <el-form label-width="60px" label-position="left" class="login-form" :model="loginForm" :rules="rulesLogin" v-show="loginShow">
           <el-form-item label="账号：" prop="username">
             <el-input v-model="loginForm.username"></el-input>
           </el-form-item>
@@ -30,11 +30,11 @@
           </el-form-item>
           <el-form-item>
             <el-button size="medium" plain>登陆</el-button>
-            <el-button size="medium" plain>注册</el-button>
+            <el-button size="medium" plain @click="toggleRegister">注册</el-button>
           </el-form-item>
         </el-form>
         <!-- register -->
-        <el-form label-width="90px" label-position="left" class="register-form" :model="registerForm" :rules="rulesRegister" status-icon>
+        <el-form label-width="90px" label-position="left" class="register-form" :model="registerForm" :rules="rulesRegister" v-show="registerShow" status-icon>
           <el-form-item label="账号：" prop="username">
             <el-input v-model="registerForm.username"></el-input>
           </el-form-item>
@@ -66,6 +66,14 @@
 <script>
 export default {
   data () {
+    // leaveForm
+    var checkUserLeave = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('留言不能为空'))
+      } else {
+        callback()
+      }
+    }
     // loginForm
     var checkLoginName = (rule, value, callback) => {
       if (!value) {
@@ -88,9 +96,9 @@ export default {
         return callback(new Error('账号不能为空'))
       } else {
         if (value.length < 6 || value.length > 12) {
-          return callback(new Error('账号不能小于6位或大于12位'))
+          callback(new Error('账号不能小于6位或大于12位'))
         } else if (!reg.test(value)) {
-          return callback(new Error('账号不能含除数字，字母，下划线外特殊字符'))
+          callback(new Error('账号不能含除数字，字母，下划线外特殊字符'))
         } else {
           callback()
         }
@@ -100,33 +108,63 @@ export default {
       if (!value) {
         return callback(new Error('昵称不能为空'))
       } else {
-        callback()
+        if (value.length > 12) {
+          callback(new Error('昵称不能大于12个字符'))
+        } else {
+          callback()
+        }
       }
     }
     var checkRegisterPass = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('密码不能为空'))
       } else {
-        callback()
+        if (value.length < 6 || value.length > 12) {
+          callback(new Error('密码不能小于6位'))
+        } else {
+          callback()
+        }
       }
     }
     var checkRegisterPassAgain = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('请再次输入密码'))
       } else {
-        callback()
+        if (value !== this.registerForm.userpass) {
+          callback(new Error('两次密码输入不一致'))
+        } else {
+          callback()
+        }
       }
     }
     var checkRegisterSafe = (rule, value, callback) => {
+      let reg = new RegExp(/^[0-9]*$/)
       if (!value) {
         return callback(new Error('请输入密保'))
       } else {
-        callback()
+        if (!reg.test(value)) {
+          callback(new Error('密保必须为纯数字'))
+        } else if (value.length > 12) {
+          callback(new Error('损塞，整这么长能记住么？请小于12位'))
+        } else {
+          callback()
+        }
       }
     }
     return {
       title: '留言板',
       warning: '登陆后留言',
+      leaveShow: true,
+      loginShow: false,
+      registerShow: false,
+      leaveForm: {
+        userleave: ''
+      },
+      rulesLeave: {
+        userleave: [
+          { validator: checkUserLeave, trigger: 'blur' }
+        ]
+      },
       loginForm: {
         username: '',
         userpass: ''
@@ -161,8 +199,20 @@ export default {
         ],
         safepass: [
           { validator: checkRegisterSafe, trigger: 'blur' }
-        ],
+        ]
       }
+    }
+  },
+  methods: {
+    toggleLogin () {
+      this.leaveShow = false
+      this.loginShow = true
+      this.registerShow = false
+    },
+    toggleRegister () {
+      this.leaveShow = false
+      this.loginShow = false
+      this.registerShow = true
     }
   }
 }
@@ -198,6 +248,9 @@ export default {
           span
             margin-right: 10px
             transform: translateY(10px)
+            cursor: pointer
+            &:hover
+              color: $home-warning
             i
               margin-right: 5px
       .form-wrap

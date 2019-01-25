@@ -64,7 +64,9 @@ export default {
       if (this.lock) {
         return
       }
-      e.clientX < 10 ? this.lock = true : this.lock
+      if (e.clientX < 10) {
+        this.lock = true
+      }
     },
     returnHome: function () {
       this.$router.push('/')
@@ -78,6 +80,17 @@ export default {
   .page-wrap
     width: 100%
     height: 100%
+    .avatar-wrap
+      display: flex
+      flex-grow: .2
+      .avatar
+        width: 180px;
+        height: 180px;
+        border-radius: 100px;
+        background: url("/static/images/maomi.jpg") no-repeat center;
+        background-size: 180px;
+        border: 8px solid rgba(10, 10, 10, 0.2);
+        box-sizing: border-box
     .nav
       position: fixed
       top: 0
@@ -108,17 +121,6 @@ export default {
           font-style: normal
         span
           cursor: pointer
-      .avatar-wrap
-        display: flex
-        flex-grow: .2
-        .avatar
-          width: 180px;
-          height: 180px;
-          border-radius: 100px;
-          background: url("/static/images/maomi.jpg") no-repeat center;
-          background-size: 180px;
-          border: 8px solid rgba(10, 10, 10, 0.2);
-          box-sizing: border-box
       .navlist
         width: 180px
         a
@@ -187,6 +189,26 @@ export default {
         width: $main-width
         margin: auto
         min-height: 120px
+        .toptalk
+          width: 100%
+          height: 100px
+          padding: 20px
+          box-sizing: border-box
+          position: relative
+          text-align: center
+          font-size: $font-just
+          p
+            line-height: 60px
+            font-weight: 700
+          .icon-quote-left,.icon-quote-right
+            font-size: $font-normal
+            position: absolute
+          .icon-quote-left
+            top: 20px
+            left: 0
+          .icon-quote-right
+            bottom: 20px
+            right: 0
       footer
         display: flex
         width: $main-width
