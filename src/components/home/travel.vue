@@ -8,7 +8,7 @@
     <div class="time-wrap">
       <ul class="time-line" v-for="travel in travels" :key="travel.id">
         <li class="tl-header">
-          <h2>{{travel.month}}</h2>
+          {{travel.month}}
         </li>
         <ul class="tl-body" v-for="item in travel.items" :key="item.id">
           <li class="tl-item">
@@ -126,7 +126,9 @@ export default {
   @import '~common/stylus/variable'
   .travel-wrap
     .time-wrap
-      margin: 30px 0 10px 0
+      margin-top: 30px
+      margin-bottom: 10px
+      font-size: $font-default
       .time-line
         .tl-header
           width: 100px
@@ -184,4 +186,57 @@ export default {
                   left: -8px
                 .tl-link
                   color: $home-bg
+  .mobile
+    .time-wrap
+      margin-top: .3rem
+      margin-bottom: .1rem
+      font-size: $mobileFont-default
+      .time-line
+        .tl-header
+          width: 1.5rem
+          height: .5rem
+          line-height: .5rem
+          display: flex
+          align-items: center
+          justify-content: center
+          padding: 0
+          border-radius: .3rem
+        .tl-body
+          .tl-item
+            .tl-wrap
+              padding: .2rem 0 .2rem .2rem
+              margin-left: .75rem
+              border-left: .08rem solid $home-navbg
+              &:before
+                position: absolute
+                content: ""
+                width: 6px
+                height: 6px
+                left: -8px
+                background: $home-bg
+                border: 3px solid $home-navbg
+                border-radius: 50%
+                box-shadow: 0 0 0 3px $home-bg
+              .tl-data
+                display: block
+                width: 1.3rem
+                margin-left: -1rem
+                font-size: $mobileFont-default
+              .tl-content
+                max-width: 700px
+                padding: .2rem
+                border-radius: .15rem
+                position: relative
+                &:before
+                  content: ''
+                  position: absolute
+                  display: block
+                  width: 0
+                  height: 0
+                  border: 8px solid transparent
+                  border-right-color: $home-navbg
+                  border-left-width: 0
+                  top: 50%
+                  margin-top: -8px
+                  left: -8px              
 </style>

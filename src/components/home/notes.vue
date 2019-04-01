@@ -53,6 +53,29 @@
           <a href="" class="ArclShow"></a>
         </div>
       </article>
+      <article>
+        <a href="javascript:;" class="title">
+          关于跨域数据请求的一些絮叨
+        </a>
+        <p class="info-wrap">
+          <span>标签：Vue</span>
+          <span>时间：2018-09-03</span>
+          <span>作者：蒹葭</span>
+          <span>备注：原创</span>
+        </p>
+        <div class="watch">
+          <i class="icon-eye"></i>
+          <span>37</span>
+        </div>
+        <div class="content">
+          <h2>跨域数据请求</h2>
+          <p>最近在看huangyi老师的vue音乐播放器视频，其中的跨域数据请求因为视频距现在已经过去1年，qq音乐许多接口已经改变，因此在跨域过程中有许多坑需要解决，这里..</p>
+        </div>
+        <a href="javascript:;" class="whole-btn">展开全文</a>
+        <div class="ArclBttom">
+          <a href="" class="ArclShow"></a>
+        </div>
+      </article>
     </div>
     <div class="pagination">
       <a href="" class="disable">前页</a>
@@ -81,13 +104,15 @@ export default {
   .notes-wrap
     .topnav
       display: flex
+      width: $main-width
       height: 100px
-      justify-content: space-between
+      background: $home-bg
       flex-wrap: wrap
       align-content: space-evenly
       align-items: center
       li
         width: 14%
+        margin-right: 3.2%
         text-align: center
         height: 32px
         line-height: 32px
@@ -95,6 +120,9 @@ export default {
         overflow: hidden
         position: relative
         border-radius: 3px
+        font-size: $font-normal
+        &:nth-child(6)
+          margin-right: 0
         &.active,&:hover
           span
             &:nth-child(2)
@@ -112,11 +140,11 @@ export default {
           &:nth-child(2)
             background: $home-thingray
     .article-wrap
-      padding-top: 40px
+      margin-top: 30px
       article
-        padding-bottom: 40px
+        padding-bottom: 30px
         border-bottom: 1px solid $home-line
-        margin-bottom: 50px
+        margin-bottom: 30px
         position: relative
         .title
           font-weight: 700
@@ -156,7 +184,7 @@ export default {
         .content
           border-left: 3px solid $home-thingray
           padding-left: 30px
-          margin: 20px 0 30px 0
+          margin: 10px 0 20px 0
           line-height: $font-title
           font-size: $font-normal
           text-align: justify
@@ -164,9 +192,9 @@ export default {
           h2
             font-size: $font-middle
             font-weight: 700
-            margin: 10px 0 20px 0
+            margin: 10px 0
         .whole-btn
-          font-size: 16px
+          font-size: $font-normal
           padding: 10px 0 10px 33px
           text-decoration: underline
     .pagination
@@ -185,4 +213,68 @@ export default {
         background: $home-navbg
         margin: 0 10px
         color: $home-bg
+  .mobile
+    .notes-wrap
+      .topnav
+        width: 7.1rem
+        height: 1.6rem
+        align-content: center
+        li
+          width: 22%
+          margin-right: 4%
+          height: .52rem
+          line-height: .52rem
+          font-size: $mobileFont-extra
+          &:nth-child(4),&:nth-child(8)
+            margin-right: 0
+          &:nth-child(n+5)
+            margin-top: .15rem
+          &.active,&:hover
+            span
+              &:nth-child(2)
+                transform: translate3d(100%, 0, 0)
+          span
+            height: .52rem
+      .article-wrap
+        margin-top: .4rem
+        article
+          padding-bottom: .4rem
+          margin-bottom: .4rem
+          .title
+            font-size: $mobileFont-middle
+            &:before
+              display: none
+          .info-wrap
+            padding: .25rem 0
+            span
+              font-size: $mobileFont-default
+              margin-right: .2rem
+          .watch
+            top: 1rem
+            width: .3rem
+            i
+              font-size: $mobileFont-just
+            span
+              margin-top: .05rem
+              font-size: $mobileFont-default
+          .content
+            border-left: .06rem solid $home-thingray
+            padding-left: .3rem
+            margin: .1rem 0 .2rem 0
+            line-height: $mobileFont-title
+            font-size: $mobileFont-normal
+            letter-spacing: .015rem
+            h2
+              font-size: $mobileFont-just
+              margin: .1rem 0 .1rem 0
+          .whole-btn
+            font-size: $mobileFont-normal
+            padding: .1rem 0 .1rem .36rem
+      .pagination
+        margin: -.2rem 0 .2rem 0
+        font-size: $mobileFont-normal
+        span
+          padding: .1rem .15rem
+          line-height: .3rem
+          margin: 0 .1rem
 </style>

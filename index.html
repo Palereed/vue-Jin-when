@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
     <meta name="author" content="Palereed">
     <meta name="Description" content="锦时,吾之素年,汝与锦时"/>
     <meta name="Keywords" content="锦时,vue,node,前端学习,个人博客,喵小屋"/>
@@ -10,6 +10,34 @@
     <link rel="stylesheet" href="static/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <title>锦时</title>
+    <script>
+      (function (win,doc){
+        if (!win.addEventListener) return;
+        var html = document.documentElement;
+        // mobile
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+          html.className = 'mobile'
+        }
+        // 苹果系统
+        if(/webOS|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          html.className += ' ios'
+        }
+        // font-size
+        function setFont(cb) {
+					var w = html.clientWidth,
+							h = html.clientHeight;
+					html.style.fontSize = w > h ? w / 1334 * 100 + "px" : w / 750 * 100 + "px";
+					if(cb && typeof (cb) == "function") {cb()}
+        }
+        setFont();
+        doc.addEventListener('DOMContentLoaded', setFont, false);
+        win.addEventListener('resize', setFont, false);
+        win.addEventListener('load', setFont, false); 
+        win.addEventListener('orientationchange', function() {
+          location.reload()
+        }, false);
+        })(window,document);
+    </script>
   </head>
   <body>
     <div id="app"></div>

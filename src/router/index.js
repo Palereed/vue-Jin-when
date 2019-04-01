@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Curtain from 'components/curtain/curtain'
+import Curtain from 'components/home/curtain'
+// home
 import Home from 'components/home/home'
-import Notes from 'components/notes/notes'
-import Record from 'components/record/record'
-import Travel from 'components/travel/travel'
-import Message from 'components/message/message'
-import Writer from 'components/writer/writer'
+import Notes from 'components/home/notes'
+import Record from 'components/home/record'
+import Travel from 'components/home/travel'
+import Message from 'components/home/message'
+import Writer from 'components/home/writer'
+
+// admin
+import Login from 'components/admin/login'
+
 Vue.use(Router)
 
 export default new Router({
@@ -38,8 +43,16 @@ export default new Router({
         {
           path: '/home/writer',
           component: Writer
+        },
+        {
+          path: '/home/login',
+          component: Login
         }
       ]
+    },
+    {
+      path: '/admin',
+      component: Login
     }
   ],
   linkActiveClass: 'active'

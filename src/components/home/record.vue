@@ -64,6 +64,20 @@ export default {
       time: 'June 16th, 2018',
       title: '锦时上线啦',
       content: '经过购买域名，备案，调试端口，增补漏洞，这个网站终于上线了。虽然或多或少有一点不尽人意，但是会在以后的学习之路的完善这个网站，这里会有我在前端之路上前进的脚印的。为自己加油。'
+    },
+    {
+      weather: '晴',
+      spirit: '开心',
+      time: 'June 16th, 2018',
+      title: '锦时上线啦',
+      content: '经过购买域名，备案，调试端口，增补漏洞，这个网站终于上线了。虽然或多或少有一点不尽人意，但是会在以后的学习之路的完善这个网站，这里会有我在前端之路上前进的脚印的。为自己加油。'
+    },
+    {
+      weather: '晴',
+      spirit: '开心',
+      time: 'June 16th, 2018',
+      title: '锦时上线啦',
+      content: '经过购买域名，备案，调试端口，增补漏洞，这个网站终于上线了。虽然或多或少有一点不尽人意，但是会在以后的学习之路的完善这个网站，这里会有我在前端之路上前进的脚印的。为自己加油前端之路上前进的。'
     }
     ]
   }
@@ -159,4 +173,83 @@ export default {
                 display: inline-block
                 margin: 0 10px
                 color: $home-thingray
+  .mobile
+    .event-wrap
+      margin-top: .3rem
+      .timer-shaft
+        width: 2px
+        top: 5px
+        margin-left: -1px
+      .event-list
+        .event-item
+          width: 3.35rem
+          .time-content
+            letter-spacing: 1px
+            h3
+              font-size: $mobileFont-just
+              margin: .1rem 0
+            p
+              line-height: $mobileFont-big 
+              font-size: $mobileFont-normal
+          &:nth-child(odd)
+            left: 0
+            padding-right: 16px
+            .time-content
+              text-align: right
+            span
+              float: right
+            .anchor
+              top: 1px
+              right: -30px
+            .line
+              right: -.43rem
+          &:nth-child(even)
+            right: 0
+            padding-left: 18px
+            .time-content
+              text-align: left
+            span
+              float: left
+            .anchor
+              top: 1px
+              left: -31px
+            .line
+              left: -.43rem
+          .time-info
+            height: .26rem
+            line-height: .26rem
+            font-size: $mobileFont-small
+            .anchor
+              width: 8px
+              height: 8px
+              border-radius: 4px
+              position: absolute
+              &:after
+                content: ''
+                display: block
+                background: #313d4b
+                width: 6px
+                height: 6px
+                border-radius: 3px
+                position: absolute
+                top: 1px
+                left: 1px
+            .line
+              position: absolute
+              border-radius: .02rem
+              top: .08rem
+              width: .3rem
+              height: .04rem
+              background: #313d4b
+            .spirit
+              &:before,&:after
+                content: '|'
+                display: inline-block
+                margin: 0 .1rem
+                color: $home-thingray
+  .ios  
+    .event-list
+      .event-item
+        &:nth-child(even)
+          padding-left: 17px !important                   
 </style>

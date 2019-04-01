@@ -13,14 +13,14 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      title: '锦时',
-      desc: '吾之素年，汝与锦时。',
-      welcome: '进入锦时'
-    }
+      title: "锦时",
+      desc: "吾之素年，汝与锦时。",
+      welcome: "进入锦时"
+    };
   }
-}
+};
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
@@ -73,4 +73,29 @@ export default {
         -moz-animation: tada 1s
         -webkit-animation: tada 1s
         -o-animation: tada 1s
+  .mobile
+    .wrap
+      .title
+        .name
+          font-size: $mobileFont-jinwhen
+          height: 1.2rem
+          line-height: 1.2rem
+          margin-bottom: .3rem
+          padding: 0 .6rem
+          &:before,&:after
+            width: .5rem
+            height: .5rem
+          &:before
+            border-top: .06rem solid $home-font
+            border-left: .06rem solid $home-font
+          &:after
+            border-bottom: .06rem solid $home-font
+            border-right: .06rem solid $home-font
+      .avatar
+        width: 3.6rem
+        height: 3.6rem
+        background: url("/static/images/maomi.jpg") no-repeat
+        background-size: 3.6rem
+      .welcome
+        font-size: $mobileFont-middle
 </style>

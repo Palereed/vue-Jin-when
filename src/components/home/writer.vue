@@ -37,8 +37,10 @@
         <span>Github：</span>
         <a :href="github.href">{{github.desc}}</a>
       </li>
+      <li>
+        <img src="../../common/images/cat.png" @click="linkAdmin">
+      </li>
     </ul>
-    <img class="egg" src="../../common/images/cat.png">
   </div>
 </template>
 
@@ -49,7 +51,7 @@ export default {
       title: '个人介绍',
       name: '蒹葭（没错，就是这句蒹葭苍苍，白露为霜）',
       self: '好好的一个文艺青年，偶然间闯入前端领域，一遇前端误终身，秉着被JS虐千万遍的执着在成为前端大牛的道路上前进。',
-      jinwhen: '个人博客，用于保存日常学习中的问题，并且分享其解决方法。为什么叫锦时？柳絮乘着大风吹，树影下的人想睡..钟声敲响了日落，柏油路跃过山坡..爬满青藤的房子，屋檐下的邻居，在黄昏中飞驰。真的好美，希望自己不忘初心。',
+      jinwhen: '个人博客，用于保存日常学习中的问题，并且分享其解决方法。在上面发发牢骚，缅怀缅怀过去，憧憬憧憬未来，为自己打打气，不忘初心。',
       email: '544989630@qq.com',
       github: {
         href: 'https://github.com/Palereed',
@@ -64,6 +66,20 @@ export default {
         desc: '实习期，正好要做毕业设计，就用Vue重写一遍吧，也当作对自己学习工作的总结。'
       }]
     }
+  },
+  methods: {
+    linkAdmin() {
+      // 若为移动端，不可进入后台
+      if (/mobile/.test(document.documentElement.className)) {
+        this.$message({
+          message: '呀，请从PC端进入喵管家~',
+          type: 'warning',
+          center: true
+        });
+        return
+      }
+      this.$router.push('/admin')
+    }
   }
 }
 </script>
@@ -73,9 +89,9 @@ export default {
   .writer-wrap
     height: calc(100vh - 54px)
     .avatar-wrap
-      margin: 30px 0
       display: flex
       justify-content: center
+      margin: 30px
       .avatar
         border: 0
     .self-info
@@ -91,8 +107,29 @@ export default {
         ul.version
           span
             width: 60px
-    .egg
-      float: right
-      margin-top: 10px
-      cursor: pointer
+        &:last-child
+          justify-content: flex-end
+          img
+            cursor: pointer
+  .mobile
+    .writer-wrap
+      height: auto !important
+      font-size: $mobileFont-normal
+      margin-bottom: .3rem
+      .avatar-wrap
+        display: flex
+        justify-content: center
+        margin: .3rem
+        .avatar
+          border: 0
+      .self-info
+        li
+          display: flex
+          span
+            flex: .9rem 0 0
+            width: .9rem
+          ul.version
+            span
+              width: 1rem 
+              flex: 1rem 0 0      
 </style>

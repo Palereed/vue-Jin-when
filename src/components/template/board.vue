@@ -256,4 +256,40 @@ export default {
       .form-wrap
         .login-form,.register-form
           width: 600px
+  .mobile 
+    .board-wrap
+      .message-form
+        .title
+          font-size: $mobileFont-normal
+          display: flex
+          justify-content: space-between
+          align-items: center
+          height: .52rem
+          margin: .2rem 0
+          border-bottom: 1px solid $home-line
+          h2
+            transform: translateY(0rem)
+          .login
+            display: flex
+            align-items: center
+            .login-btn
+              width: .8rem
+              height: .8rem
+              border-radius: .4rem
+              border-radius: .4rem
+              transform: translateY(-.2rem)
+              img
+                width: .8rem
+                border-radius: .4rem
+            span
+              margin-right: .1rem
+              transform: translateY(0rem)
+              cursor: pointer
+              &:hover
+                color: $home-warning
+              i
+                margin-right: 5px
+        .form-wrap
+          .login-form,.register-form
+            width: 100%
 </style>

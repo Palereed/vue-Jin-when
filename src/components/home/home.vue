@@ -29,8 +29,11 @@
       </div>
     </div>
     <header></header>
+    <div class="open-nav" @touchstart="toggleNav" :class="{'no-nav': lock === true}">
+      <i class="icon-menu"></i>
+    </div>
     <div class="content-wrap" @mousemove="weakNav" :class="{'no-nav': lock === false}">
-      <div class="main-wrap">
+      <div class="main-wrap" @touchstart="hideNav">
         <router-view></router-view>
       </div>
       <footer>
@@ -51,6 +54,11 @@ export default {
       lock: true
     }
   },
+  mounted () {
+    if (this.isMobile()) {
+      this.lock = false
+    }
+  },
   computed: {
     isLock () {
       return this.lock ? 'icon-lock-fill' : 'icon-unlock-fill'
@@ -61,11 +69,19 @@ export default {
       this.lock = !this.lock
     },
     weakNav: function (e) {
-      if (this.lock) {
+      if (this.lock || this.isMobile()) {
         return
       }
       if (e.clientX < 10) {
-        this.lock = true
+        this.toggleNav()
+      }
+    },
+    hideNav: function() {
+      this.lock = false
+    },
+    isMobile: function() {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+        return true
       }
     },
     returnHome: function () {
@@ -80,16 +96,19 @@ export default {
   .page-wrap
     width: 100%
     height: 100%
+    min-width: 1280px
+    .open-nav
+      display: none
     .avatar-wrap
       display: flex
       flex-grow: .2
       .avatar
-        width: 180px;
-        height: 180px;
-        border-radius: 100px;
-        background: url("/static/images/maomi.jpg") no-repeat center;
-        background-size: 180px;
-        border: 8px solid rgba(10, 10, 10, 0.2);
+        width: 180px
+        height: 180px
+        border-radius: 100px
+        background: url("/static/images/maomi.jpg") no-repeat center
+        background-size: 180px
+        border: 8px solid rgba(10, 10, 10, 0.2)
         box-sizing: border-box
     .nav
       position: fixed
@@ -103,6 +122,7 @@ export default {
       flex-direction: column
       align-items: center
       transition: transform .5s
+      z-index: 1
       &.close
         transform: translate3d(-($nav-width), 0, 0)
       .navbtn
@@ -148,7 +168,7 @@ export default {
             display: block
             width: 70px
             height: 56px
-            background: url(menupic.png)
+            background: url("/static/images/menupic.png")
             background-size: 70px 56px
             position: absolute
             top: 12px
@@ -188,17 +208,21 @@ export default {
       .main-wrap
         width: $main-width
         margin: auto
-        min-height: 120px
         .toptalk
           width: 100%
           height: 100px
+          background: $home-bg
           padding: 20px
           box-sizing: border-box
           position: relative
           text-align: center
           font-size: $font-just
           p
-            line-height: 60px
+            height: 100%
+            line-height: 1.4
+            display: flex
+            align-items: center
+            justify-content: center
             font-weight: 700
           .icon-quote-left,.icon-quote-right
             font-size: $font-normal
@@ -216,4 +240,104 @@ export default {
         padding: 20px
         font-size: $font-default
         justify-content: space-between
+  .mobile
+    .page-wrap
+      overflow-x: hidden
+      min-width: 100%
+      .open-nav
+        position: fixed
+        width: .8rem
+        height: .8rem
+        border-radius: .1rem
+        background: $home-navbg
+        right: -.1rem
+        bottom: 2rem
+        z-index: 1
+        transition: transform .5s
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: .52rem
+        color: #fff
+        &.no-nav
+          transform: translate3d(100%, 0, 0)
+      .avatar-wrap
+        .avatar
+          width: 2.58rem
+          height: 2.58rem
+          border-radius: 1.5rem
+          background: url("/static/images/maomi.jpg") no-repeat center
+          background-size: 2.6rem
+          border: .12rem solid rgba(10, 10, 10, 0.2)
+      .nav
+        width: $mobileNav-width
+        &.close
+          transform: translate3d(-($mobileNav-width), 0, 0)
+        .navbtn
+          display: none
+        .title
+          font-size: $mobileFont-title
+          i
+            font-size: $mobileFont-default
+        .navlist
+          width: 3.2rem
+          a
+            height: 1.2rem
+            line-height: 1.2rem
+            font-size: $mobileFont-just
+            &.active,&:hover
+              cursor: pointer
+              color: #fff
+              &:after
+                animation: none
+              span
+                &:before,&:after
+                  display: none
+            &:after
+              content: ''
+              display: block
+              width: 1.2rem
+              height: .96rem
+              background: url("/static/images/menupic.png")
+              background-size: 1.2rem .96rem
+              position: absolute
+              top: .12rem
+              right: 0
+            span
+              &:before,&:after
+                border: none
+      header
+        height: 1.6rem
+        margin-bottom: -1.6rem
+      .content-wrap
+        padding-left: $mobileNav-width
+        &.no-nav
+          transform: translate3d(-($mobileNav-width), 0, 0)
+        .main-wrap
+          width: $mobileMain-width
+          padding: 0 .2rem
+          box-sizing: border-box
+          min-height: calc(100vh)
+        .toptalk
+            height: 1.6rem
+            padding: .4rem .4rem .3rem .4rem
+            font-size: $mobileFont-just
+            .icon-quote-left,.icon-quote-right
+              font-size: $mobileFont-normal
+              position: absolute
+            .icon-quote-left
+              top: .2rem
+              left: 0
+            .icon-quote-right
+              bottom: .2rem
+              right: 0
+        footer
+          width: $mobileMain-width
+          padding: 0
+          font-size: $mobileFont-normal
+          padding: .2rem
+          box-sizing: border-box
+          span
+            &:nth-child(2)
+              display: none
 </style>
