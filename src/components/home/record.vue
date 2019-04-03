@@ -145,7 +145,7 @@ export default {
             font-weight: 300
             color: $home-gray
             .anchor
-              background: $home-bg
+              background: #fff
               width: 16px
               height: 16px
               border-radius: 10px
@@ -189,7 +189,7 @@ export default {
               font-size: $mobileFont-just
               margin: .1rem 0
             p
-              line-height: $mobileFont-big 
+              line-height: $mobileFont-big
               font-size: $mobileFont-normal
           &:nth-child(odd)
             left: 0
@@ -247,9 +247,9 @@ export default {
                 display: inline-block
                 margin: 0 .1rem
                 color: $home-thingray
-  .ios  
+  .ios
     .event-list
       .event-item
         &:nth-child(even)
-          padding-left: 17px !important                   
+          padding-left: 17px !important
 </style>

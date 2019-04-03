@@ -106,7 +106,7 @@ export default {
       display: flex
       width: $main-width
       height: 100px
-      background: $home-bg
+      background: #fff
       flex-wrap: wrap
       align-content: space-evenly
       align-items: center
@@ -136,7 +136,7 @@ export default {
           transition: transform .3s
           &:nth-child(1)
             background: $home-navbg
-            color: $home-bg
+            color: #fff
           &:nth-child(2)
             background: $home-thingray
     .article-wrap
@@ -212,7 +212,7 @@ export default {
         cursor: pointer
         background: $home-navbg
         margin: 0 10px
-        color: $home-bg
+        color: #fff
   .mobile
     .notes-wrap
       .topnav

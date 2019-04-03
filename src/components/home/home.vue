@@ -76,10 +76,10 @@ export default {
         this.toggleNav()
       }
     },
-    hideNav: function() {
+    hideNav: function () {
       this.lock = false
     },
-    isMobile: function() {
+    isMobile: function () {
       if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
         return true
       }
@@ -211,7 +211,7 @@ export default {
         .toptalk
           width: 100%
           height: 100px
-          background: $home-bg
+          background: #fff
           padding: 20px
           box-sizing: border-box
           position: relative
@@ -317,7 +317,6 @@ export default {
           width: $mobileMain-width
           padding: 0 .2rem
           box-sizing: border-box
-          min-height: calc(100vh)
         .toptalk
             height: 1.6rem
             padding: .4rem .4rem .3rem .4rem

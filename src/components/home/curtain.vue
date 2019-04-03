@@ -13,14 +13,14 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      title: "锦时",
-      desc: "吾之素年，汝与锦时。",
-      welcome: "进入锦时"
-    };
+      title: '锦时',
+      desc: '吾之素年，汝与锦时。',
+      welcome: '进入锦时'
+    }
   }
-};
+}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">

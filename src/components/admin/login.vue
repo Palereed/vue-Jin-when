@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="login-wrap">
     <div class="title">
       <h1 class="name">{{title}}</h1>
       <span class="desc">{{desc}}</span>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     // loginForm
     var checkLoginName = (rule, value, callback) => {
       if (!value) {
@@ -40,8 +40,8 @@ export default {
       }
     }
     return {
-      title: "喵管家",
-      desc: "吾之素年，汝与锦时。",
+      title: '喵管家',
+      desc: '吾之素年，汝与锦时。',
       loginForm: {
         username: '',
         userpass: ''
@@ -54,19 +54,19 @@ export default {
           { validator: checkLoginPass, trigger: 'blur' }
         ]
       }
-    };
+    }
   },
   methods: {
-    returnHome() {
-      this.$router.push('home/notes')
+    returnHome () {
+      this.$router.push('/home/notes')
     }
   }
-};
+}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
-  .wrap
+  .login-wrap
     display: flex
     flex-direction: column
     justify-content: center
@@ -98,10 +98,9 @@ export default {
           border-bottom: 4px solid $home-font
           border-right: 4px solid $home-font
           right: 0px
-          bottom: 0px    
+          bottom: 0px
     .form-wrap
       width: 512px
       .login-form
         width: 100%
 </style>
-

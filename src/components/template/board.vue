@@ -6,7 +6,7 @@
         <div class="login">
           <span @click="toggleLogin"><i class="icon-sign-in"></i>{{warning}}</span>
           <div class="login-btn">
-            <img src="../../common/images/owner.jpg">
+            <img src="/static/images/owner.jpg">
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
           </el-form-item>
         </el-form>
         <!-- register -->
-        <el-form label-width="90px" label-position="left" class="register-form" :model="registerForm" :rules="rulesRegister" v-show="registerShow" status-icon>
+        <el-form label-width="90px" label-position="left" class="register-form" :model="registerForm" :rules="rulesRegister" v-show="registerShow">
           <el-form-item label="账号：" prop="username">
             <el-input v-model="registerForm.username"></el-input>
           </el-form-item>
@@ -48,8 +48,15 @@
             <el-input v-model="registerForm.checkpass" type="password"></el-input>
           </el-form-item>
           <el-form-item label="头像：">
+            <div class="avatarList">
+              <img v-for='avatar in avatarList' :src='avatar' :key="avatar.id" @click="chooseAvatar">
+            </div>
           </el-form-item>
           <el-form-item label="选择：">
+            <div class="avatarRandom" >
+              <img :src='avatarRandom' v-show="!toChoose">
+              <img :src='whichAvatar' v-show="toChoose">
+            </div>
           </el-form-item>
           <el-form-item label="密保：" prop="safepass">
             <el-input v-model="registerForm.safepass"></el-input>
@@ -64,6 +71,17 @@
 </template>
 
 <script>
+import {randomNum} from 'common/js/util'
+const AVATAR_LIST = [
+  '/static/images/visit1.jpg',
+  '/static/images/visit2.jpg',
+  '/static/images/visit3.jpg',
+  '/static/images/visit4.jpg',
+  '/static/images/visit5.jpg',
+  '/static/images/visit6.jpg',
+  '/static/images/visit7.jpg',
+  '/static/images/visit8.jpg'
+]
 export default {
   data () {
     // leaveForm
@@ -157,6 +175,9 @@ export default {
       leaveShow: true,
       loginShow: false,
       registerShow: false,
+      toChoose: false, // 是否选择头像
+      whichAvatar: '', // 选择头像
+      avatarList: AVATAR_LIST,
       leaveForm: {
         userleave: ''
       },
@@ -203,6 +224,12 @@ export default {
       }
     }
   },
+  computed: {
+    avatarRandom () {
+      let index = randomNum(0, this.avatarList.length, true)
+      return this.avatarList[index]
+    }
+  },
   methods: {
     toggleLogin () {
       this.leaveShow = false
@@ -213,6 +240,11 @@ export default {
       this.leaveShow = false
       this.loginShow = false
       this.registerShow = true
+    },
+    chooseAvatar (e) {
+      this.toChoose = true
+      let src = e.target.getAttribute('src')
+      this.whichAvatar = src
     }
   }
 }
@@ -256,9 +288,27 @@ export default {
       .form-wrap
         .login-form,.register-form
           width: 600px
-  .mobile 
+          .avatarList
+            display: flex
+            width: 100%
+            flex-wrap: wrap
+            img
+              width: 100px
+              height: 100px
+              border-radius: 50%
+              margin: 0 10px 10px 0
+              cursor: pointer
+          .avatarRandom
+            img
+              width: 100px
+              height: 100px
+              border-radius: 50%
+  .mobile
     .board-wrap
       .message-form
+        .register-form
+          .el-form-item__label
+            width: 1.2rem !important
         .title
           font-size: $mobileFont-normal
           display: flex
@@ -292,4 +342,13 @@ export default {
         .form-wrap
           .login-form,.register-form
             width: 100%
+          .avatarList
+            img
+              width: 1rem
+              height: 1rem
+              margin: 0 .1rem .1rem 0
+          .avatarRandom
+            img
+              width: 1rem
+              height: 1rem
 </style>

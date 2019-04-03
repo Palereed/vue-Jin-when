@@ -2,7 +2,7 @@
   <div class="message-wrap">
     <div class="topdesc">
       <div class="avatar">
-        <img src="../../common/images/owner.jpg">
+        <img src="/static/images/owner.jpg">
       </div>
       <div class="talk">
         <span>少年锦时</span>
@@ -10,137 +10,45 @@
       </div>
     </div>
     <!-- 留言 -->
-    <div class="message">
+    <div class="message" v-for="message in messageList" :key="message.id">
       <div class="letter">
         <div class="avatar">
-          <img src="../../common/images/visit4.jpg">
+          <img :src="message.avatar">
         </div>
         <div class="content">
-          <span class="name">非酋</span>
+          <span class="name">{{message.name}}</span>
           <span class="time">
-            留言于<b>2018-08-22 15:16:26</b>
+            留言于<b>{{message.time}}</b>
           </span>
-          <p>说好的更新，未完待续呢</p>
+          <p>{{message.content}}</p>
         </div>
-        <div class="answer-number" @click="toggleAnswer">
+        <div class="answer-number" @click="toggleAnswer(message)">
           <i class="icon-comment-o"></i>
-          <span>{{commentText}}</span>
+          <span v-if="!message.answerShow">{{message.answerList.length}}</span>
+          <span v-else>收起</span>
         </div>
       </div>
       <!-- 留言回复 -->
-      <div class="answer" v-show="seeAnswer">
-        <div class="answer-wrap">
+      <div class="answer" v-show="message.answerShow">
+        <div class="answer-wrap" v-for="answer in message.answerList" :key="answer.id">
           <div class="avatar">
-            <img src="../../common/images/visit4.jpg">
+            <img :src='answer.avatar'>
           </div>
           <div class="content">
-            <span class="name">非酋</span>
+            <span class="name">{{answer.name}}</span>
             <span class="time">
-              留言于<b>2018-08-22 15:16:26</b>
+              留言于<b>{{answer.time}}</b>
             </span>
-            <p>说好的更新，未完待续呢</p>
+            <p>{{answer.name}}</p>
           </div>
         </div>
         <!-- 留言回复表单 -->
         <div class="answer-form">
           <div class="for-just">
-            <el-button size="medium" plain @click="answerForm">{{toAnswer}}</el-button>
+            <el-button size="medium" plain @click="toggleForm(message)" v-if="!message.formShow">我要回复</el-button>
+            <el-button size="medium" plain @click="toggleForm(message)" v-else>稍后回复</el-button>
           </div>
-          <el-form label-width="60px" label-position="left" v-show="showAnswerForm">
-            <el-form-item label="内容：">
-              <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button size="medium" plain>回复</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </div>
-    </div>
-    <div class="message">
-      <div class="letter">
-        <div class="avatar">
-          <img src="../../common/images/visit4.jpg">
-        </div>
-        <div class="content">
-          <span class="name">非酋</span>
-          <span class="time">
-            留言于<b>2018-08-22 15:16:26</b>
-          </span>
-          <p>说好的更新，未完待续呢</p>
-        </div>
-        <div class="answer-number" @click="toggleAnswer">
-          <i class="icon-comment-o"></i>
-          <span>{{commentText}}</span>
-        </div>
-      </div>
-      <!-- 留言回复 -->
-      <div class="answer" v-show="seeAnswer">
-        <div class="answer-wrap">
-          <div class="avatar">
-            <img src="../../common/images/visit4.jpg">
-          </div>
-          <div class="content">
-            <span class="name">非酋</span>
-            <span class="time">
-              留言于<b>2018-08-22 15:16:26</b>
-            </span>
-            <p>说好的更新，未完待续呢</p>
-          </div>
-        </div>
-        <!-- 留言回复表单 -->
-        <div class="answer-form">
-          <div class="for-just">
-            <el-button size="medium" plain @click="answerForm">{{toAnswer}}</el-button>
-          </div>
-          <el-form label-width="60px" label-position="left" v-show="showAnswerForm">
-            <el-form-item label="内容：">
-              <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button size="medium" plain>回复</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </div>
-    </div>
-    <div class="message">
-      <div class="letter">
-        <div class="avatar">
-          <img src="../../common/images/visit4.jpg">
-        </div>
-        <div class="content">
-          <span class="name">非酋</span>
-          <span class="time">
-            留言于<b>2018-08-22 15:16:26</b>
-          </span>
-          <p>说好的更新，未完待续呢</p>
-        </div>
-        <div class="answer-number" @click="toggleAnswer">
-          <i class="icon-comment-o"></i>
-          <span>{{commentText}}</span>
-        </div>
-      </div>
-      <!-- 留言回复 -->
-      <div class="answer" v-show="seeAnswer">
-        <div class="answer-wrap">
-          <div class="avatar">
-            <img src="../../common/images/visit4.jpg">
-          </div>
-          <div class="content">
-            <span class="name">非酋</span>
-            <span class="time">
-              留言于<b>2018-08-22 15:16:26</b>
-            </span>
-            <p>说好的更新，未完待续呢</p>
-          </div>
-        </div>
-        <!-- 留言回复表单 -->
-        <div class="answer-form">
-          <div class="for-just">
-            <el-button size="medium" plain @click="answerForm">{{toAnswer}}</el-button>
-          </div>
-          <el-form label-width="60px" label-position="left" v-show="showAnswerForm">
+          <el-form label-width="60px" label-position="left" v-show="message.formShow">
             <el-form-item label="内容：">
               <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
             </el-form-item>
@@ -167,24 +75,53 @@ import Board from 'components/template/board'
 export default {
   data () {
     return {
-      answerNumber: 0,
-      seeAnswer: false,
-      commentText: '',
-      showAnswerForm: false,
-      toAnswer: '我要回复'
+      messageList: [{
+        avatar: '/static/images/visit4.jpg',
+        name: '非酋',
+        time: '2018-08-22 15:16:26',
+        content: '说好的更新，未完待续呢',
+        answerShow: false, // 回复是否显示
+        formShow: false, // 回复框是否显示
+        answerList: [{
+          avatar: '/static/images/visit4.jpg',
+          name: '非酋',
+          time: '2018-08-22 15:16:26',
+          content: '说好的更新，未完待续呢'
+        },
+        {
+          avatar: '/static/images/visit4.jpg',
+          name: '非酋',
+          time: '2018-08-22 15:16:26',
+          content: '说好的更新，未完待续呢'
+        }]
+      },
+      {
+        avatar: '/static/images/visit2.jpg',
+        name: '蒹葭',
+        time: '2018-08-22 15:16:26',
+        content: '说好的更新，未完待续呢',
+        answerShow: false,
+        formShow: false,
+        answerList: [{
+          avatar: '/static/images/visit2.jpg',
+          name: '蒹葭',
+          time: '2018-08-22 15:16:26',
+          content: '说好的更新，未完待续呢'
+        }]
+      }]
     }
   },
   created () {
     this.commentText = this.answerNumber
   },
   methods: {
-    toggleAnswer: function () {
-      this.seeAnswer === true ? this.commentText = this.answerNumber : this.commentText = '收起'
-      this.seeAnswer = !this.seeAnswer
+    // 回复toggle
+    toggleAnswer: function (message) {
+      message.answerShow = !message.answerShow
     },
-    answerForm: function () {
-      this.showAnswerForm === true ? this.toAnswer = '我要回复' : this.toAnswer = '稍后回复'
-      this.showAnswerForm = !this.showAnswerForm
+    // 回复框toggle
+    toggleForm: function (message) {
+      message.formShow = !message.formShow
     }
   },
   components: {
@@ -199,7 +136,7 @@ export default {
     .topdesc
       width: $main-width
       height: 100px
-      background: $home-bg
+      background: #fff
       display: flex
       align-items: center
       .avatar
@@ -269,6 +206,9 @@ export default {
         padding-left: 85px
         .answer-wrap
           margin-bottom: 20px
+          .answer-form
+            .el-button+.el-button
+              margin-left: 0
     .pagination
       margin-top: 30px
       font-size: $font-normal
@@ -284,7 +224,7 @@ export default {
         cursor: pointer
         background: $home-navbg
         margin: 0 10px
-        color: $home-bg
+        color: #fff
   .mobile
     .message-wrap
       .topdesc
@@ -371,5 +311,5 @@ export default {
         span
           padding: .1rem .15rem
           line-height: .3rem
-          margin: 0 .1rem       
+          margin: 0 .1rem
 </style>

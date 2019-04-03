@@ -135,7 +135,7 @@ export default {
           padding: 10px 5px
           border-radius: 50px
           background: $home-navbg
-          color: $home-bg
+          color: #fff
           text-align: center
         .tl-body
           .tl-item
@@ -157,10 +157,10 @@ export default {
                 width: 8px
                 height: 8px
                 left: -9px
-                background: $home-bg
+                background: #fff
                 border: 3px solid $home-navbg
                 border-radius: 50%
-                box-shadow: 0 0 0 3px $home-bg
+                box-shadow: 0 0 0 3px #fff
               .tl-data
                 display: block
                 width: 75px
@@ -185,7 +185,7 @@ export default {
                   margin-top: -8px
                   left: -8px
                 .tl-link
-                  color: $home-bg
+                  color: #fff
   .mobile
     .time-wrap
       margin-top: .3rem
@@ -213,10 +213,10 @@ export default {
                 width: 6px
                 height: 6px
                 left: -8px
-                background: $home-bg
+                background: #fff
                 border: 3px solid $home-navbg
                 border-radius: 50%
-                box-shadow: 0 0 0 3px $home-bg
+                box-shadow: 0 0 0 3px #fff
               .tl-data
                 display: block
                 width: 1.3rem
@@ -238,5 +238,5 @@ export default {
                   border-left-width: 0
                   top: 50%
                   margin-top: -8px
-                  left: -8px              
+                  left: -8px
 </style>

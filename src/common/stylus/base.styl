@@ -10,10 +10,25 @@ body,html
   color: $home-font
   font-size: $font-default
   height: 100%
+
 .for-just
   margin-bottom: 22px
 
-// mobile element
+// element style
+.el-menu
+  border-right: none
+
+.el-table .cell
+  font-size: 12px
+  display: flex
+  justify-content: center
+  align-items: center
+.el-table td, .el-table th
+  padding: 8px 0
+.el-pagination.is-background .el-pager li:not(.disabled).active
+  background: $home-navbg
+
+// mobile element style
 .mobile .el-button--medium
   padding: .15rem .2rem
   font-size: $mobileFont-extra
@@ -33,15 +48,15 @@ body,html
 
 .mobile .register-form .el-form-item__content
   margin-left: 1.2rem !important
-  
+
 .mobile .el-textarea__inner
   padding: .05rem .15rem
   font-size: $mobileFont-extra
 
 .mobile .el-input__inner
   padding: .05rem .15rem
-  height: .6rem;
-  line-height: .6rem;
+  height: .6rem
+  line-height: .6rem
 
 .mobile .el-form-item__error
   padding-top: .04rem
@@ -49,4 +64,4 @@ body,html
 
 .mobile .el-message
   width: 6rem
-  min-width: 6rem  
+  min-width: 6rem

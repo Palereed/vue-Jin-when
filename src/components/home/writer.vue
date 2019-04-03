@@ -38,7 +38,7 @@
         <a :href="github.href">{{github.desc}}</a>
       </li>
       <li>
-        <img src="../../common/images/cat.png" @click="linkAdmin">
+        <img src="/static/images/cat.png" @click="linkAdmin">
       </li>
     </ul>
   </div>
@@ -68,17 +68,17 @@ export default {
     }
   },
   methods: {
-    linkAdmin() {
+    linkAdmin () {
       // 若为移动端，不可进入后台
       if (/mobile/.test(document.documentElement.className)) {
         this.$message({
           message: '呀，请从PC端进入喵管家~',
           type: 'warning',
           center: true
-        });
+        })
         return
       }
-      this.$router.push('/admin')
+      this.$router.push('/admin/login')
     }
   }
 }
@@ -130,6 +130,6 @@ export default {
             width: .9rem
           ul.version
             span
-              width: 1rem 
-              flex: 1rem 0 0      
+              width: 1rem
+              flex: 1rem 0 0
 </style>
