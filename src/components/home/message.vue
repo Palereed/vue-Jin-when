@@ -61,9 +61,11 @@
     </div>
     <!-- 分页部分 -->
     <div class="pagination">
-      <a href="javascript:;" class="disable">前页</a>
-      <span>1</span>
-      <a href="javascript:;">后页</a>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="12">
+      </el-pagination>
     </div>
     <!-- 留言部分 -->
     <board></board>
@@ -212,19 +214,8 @@ export default {
     .pagination
       margin-top: 30px
       font-size: $font-normal
-      a
-        &.disable
-          color: $home-gray
-      span
-        display: inline-block
-        padding: 0 10px
-        line-height: 30px
-        text-align: center
-        border-radius: 2px
-        cursor: pointer
-        background: $home-navbg
-        margin: 0 10px
-        color: #fff
+      display: flex
+      justify-content: center
   .mobile
     .message-wrap
       .topdesc
@@ -244,11 +235,11 @@ export default {
           flex: 1
           margin-left: .2rem
           span
-            font-size: $mobileFont-normal
+            font-size: $mobileFont-just
             font-weight: 700
             margin: .1rem 0
           p
-            font-size: $mobileFont-extra
+            font-size: $mobileFont-normal
             line-height 1.3
       .message
         border-bottom: 1px solid $home-line
@@ -275,7 +266,7 @@ export default {
             flex-direction: column
             justify-content: center
             p
-              font-size: $mobileFont-extra
+              font-size: $mobileFont-normal
               line-height: 1.3
             span
               display: block
@@ -284,7 +275,7 @@ export default {
                 font-weight: 700
               &.time
                 color: $home-gray
-                font-size: $mobileFont-extra
+                font-size: $mobileFont-small
                 margin: .1rem 0
                 b
                   margin-left: 5px

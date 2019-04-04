@@ -87,7 +87,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
   .writer-wrap
-    height: calc(100vh - 54px)
+    height: calc(100vh - 64px)
     .avatar-wrap
       display: flex
       justify-content: center
@@ -95,7 +95,6 @@ export default {
       .avatar
         border: 0
     .self-info
-      color: $home-darkgray
       line-height: 2.5
       li
         display: flex
@@ -110,7 +109,9 @@ export default {
         &:last-child
           justify-content: flex-end
           img
+            margin-top: 20px
             cursor: pointer
+            filter: brightness(70%)
   .mobile
     .writer-wrap
       height: auto !important
@@ -132,4 +133,7 @@ export default {
             span
               width: 1rem
               flex: 1rem 0 0
+          &:last-child
+            img
+              margin-top: .2rem
 </style>

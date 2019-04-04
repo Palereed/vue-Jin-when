@@ -87,6 +87,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
   .record-wrap
+    margin-bottom: 20px
     .event-wrap
       margin-top: 30px
       position: relative
@@ -112,8 +113,7 @@ export default {
               font-weight: 700
               margin: 10px 0
             p
-              color: $home-darkgray
-              line-height: $font-big
+              line-height: 1.8
           &:nth-child(odd)
             left: 0
             padding-right: 35px
@@ -174,79 +174,82 @@ export default {
                 margin: 0 10px
                 color: $home-thingray
   .mobile
-    .event-wrap
-      margin-top: .3rem
-      .timer-shaft
-        width: 2px
-        top: 5px
-        margin-left: -1px
-      .event-list
-        .event-item
-          width: 3.35rem
-          .time-content
-            letter-spacing: 1px
-            h3
-              font-size: $mobileFont-just
-              margin: .1rem 0
-            p
-              line-height: $mobileFont-big
-              font-size: $mobileFont-normal
-          &:nth-child(odd)
-            left: 0
-            padding-right: 16px
+    .record-wrap
+      margin-bottom: .3rem
+      .event-wrap
+        margin-top: .3rem
+        .timer-shaft
+          width: 2px
+          top: 5px
+          margin-left: -1px
+        .event-list
+          .event-item
+            width: 3.35rem
             .time-content
-              text-align: right
-            span
-              float: right
-            .anchor
-              top: 1px
-              right: -30px
-            .line
-              right: -.43rem
-          &:nth-child(even)
-            right: 0
-            padding-left: 18px
-            .time-content
-              text-align: left
-            span
-              float: left
-            .anchor
-              top: 1px
-              left: -31px
-            .line
-              left: -.43rem
-          .time-info
-            height: .26rem
-            line-height: .26rem
-            font-size: $mobileFont-small
-            .anchor
-              width: 8px
-              height: 8px
-              border-radius: 4px
-              position: absolute
-              &:after
-                content: ''
-                display: block
-                background: #313d4b
-                width: 6px
-                height: 6px
-                border-radius: 3px
-                position: absolute
+              letter-spacing: 1px
+              h3
+                font-size: $mobileFont-just
+                margin: .1rem 0
+              p
+                font-size: $mobileFont-normal
+                line-height: 1.6
+            &:nth-child(odd)
+              left: 0
+              padding-right: 16px
+              .time-content
+                text-align: right
+              span
+                float: right
+              .anchor
                 top: 1px
-                left: 1px
-            .line
-              position: absolute
-              border-radius: .02rem
-              top: .08rem
-              width: .3rem
-              height: .04rem
-              background: #313d4b
-            .spirit
-              &:before,&:after
-                content: '|'
-                display: inline-block
-                margin: 0 .1rem
-                color: $home-thingray
+                right: -30px
+              .line
+                right: -.43rem
+            &:nth-child(even)
+              right: 0
+              padding-left: 18px
+              .time-content
+                text-align: left
+              span
+                float: left
+              .anchor
+                top: 1px
+                left: -31px
+              .line
+                left: -.43rem
+            .time-info
+              height: .26rem
+              line-height: .26rem
+              margin-bottom: .2rem
+              font-size: $mobileFont-small
+              .anchor
+                width: 8px
+                height: 8px
+                border-radius: 4px
+                position: absolute
+                &:after
+                  content: ''
+                  display: block
+                  background: #313d4b
+                  width: 6px
+                  height: 6px
+                  border-radius: 3px
+                  position: absolute
+                  top: 1px
+                  left: 1px
+              .line
+                position: absolute
+                border-radius: .02rem
+                top: .08rem
+                width: .3rem
+                height: .04rem
+                background: #313d4b
+              .spirit
+                &:before,&:after
+                  content: '|'
+                  display: inline-block
+                  margin: 0 .05rem
+                  color: $home-thingray
   .ios
     .event-list
       .event-item

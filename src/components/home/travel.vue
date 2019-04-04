@@ -125,6 +125,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
   .travel-wrap
+    margin-bottom: 20px
     .time-wrap
       margin-top: 30px
       margin-bottom: 10px
@@ -165,10 +166,9 @@ export default {
                 display: block
                 width: 75px
                 margin-left: -70px
-                color: $home-darkgray
               .tl-content
                 max-width: 700px
-                padding: 15px
+                padding: 12px
                 background: $home-navbg
                 border-radius: 15px
                 position: relative
@@ -183,60 +183,62 @@ export default {
                   border-left-width: 0
                   top: 50%
                   margin-top: -8px
-                  left: -8px
+                  left: -7px
                 .tl-link
                   color: #fff
   .mobile
-    .time-wrap
-      margin-top: .3rem
-      margin-bottom: .1rem
-      font-size: $mobileFont-default
-      .time-line
-        .tl-header
-          width: 1.5rem
-          height: .5rem
-          line-height: .5rem
-          display: flex
-          align-items: center
-          justify-content: center
-          padding: 0
-          border-radius: .3rem
-        .tl-body
-          .tl-item
-            .tl-wrap
-              padding: .2rem 0 .2rem .2rem
-              margin-left: .75rem
-              border-left: .08rem solid $home-navbg
-              &:before
-                position: absolute
-                content: ""
-                width: 6px
-                height: 6px
-                left: -8px
-                background: #fff
-                border: 3px solid $home-navbg
-                border-radius: 50%
-                box-shadow: 0 0 0 3px #fff
-              .tl-data
-                display: block
-                width: 1.3rem
-                margin-left: -1rem
-                font-size: $mobileFont-default
-              .tl-content
-                max-width: 700px
-                padding: .2rem
-                border-radius: .15rem
-                position: relative
+    .travel-wrap
+      margin-bottom: .2rem
+      .time-wrap
+        margin-top: .3rem
+        margin-bottom: .1rem
+        font-size: $mobileFont-small
+        .time-line
+          .tl-header
+            width: 1.5rem
+            height: .5rem
+            line-height: .5rem
+            display: flex
+            align-items: center
+            justify-content: center
+            padding: 0
+            border-radius: .3rem
+          .tl-body
+            .tl-item
+              .tl-wrap
+                padding: .2rem 0 .2rem .2rem
+                margin-left: .75rem
+                border-left: .08rem solid $home-navbg
                 &:before
-                  content: ''
                   position: absolute
-                  display: block
-                  width: 0
-                  height: 0
-                  border: 8px solid transparent
-                  border-right-color: $home-navbg
-                  border-left-width: 0
-                  top: 50%
-                  margin-top: -8px
+                  content: ""
+                  width: 6px
+                  height: 6px
                   left: -8px
+                  background: #fff
+                  border: 3px solid $home-navbg
+                  border-radius: 50%
+                  box-shadow: 0 0 0 3px #fff
+                .tl-data
+                  display: block
+                  width: 1.3rem
+                  margin-left: -1rem
+                  font-size: $mobileFont-small
+                .tl-content
+                  max-width: 700px
+                  padding: .2rem
+                  border-radius: .15rem
+                  position: relative
+                  &:before
+                    content: ''
+                    position: absolute
+                    display: block
+                    width: 0
+                    height: 0
+                    border: 8px solid transparent
+                    border-right-color: $home-navbg
+                    border-left-width: 0
+                    top: 50%
+                    margin-top: -8px
+                    left: -8px
 </style>

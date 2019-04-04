@@ -78,9 +78,11 @@
       </article>
     </div>
     <div class="pagination">
-      <a href="" class="disable">前页</a>
-      <span>1</span>
-      <a href="">后页</a>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="12">
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -164,8 +166,9 @@ export default {
             &:before
               width: 100%
         .info-wrap
-          padding: 20px 0
+          padding: 15px 0 5px 0
           color: $home-gray
+          font-size: $font-small
           span
             margin-right: 20px
         .watch
@@ -185,8 +188,7 @@ export default {
           border-left: 3px solid $home-thingray
           padding-left: 30px
           margin: 10px 0 20px 0
-          line-height: $font-title
-          font-size: $font-normal
+          line-height: 1.8
           text-align: justify
           letter-spacing: 1.5px
           h2
@@ -194,25 +196,13 @@ export default {
             font-weight: 700
             margin: 10px 0
         .whole-btn
-          font-size: $font-normal
           padding: 10px 0 10px 33px
           text-decoration: underline
     .pagination
-      margin: -20px 0 20px 0
+      margin-bottom: 20px
       font-size: $font-normal
-      a
-        &.disable
-          color: $home-gray
-      span
-        display: inline-block
-        padding: 0 10px
-        line-height: 30px
-        text-align: center
-        border-radius: 2px
-        cursor: pointer
-        background: $home-navbg
-        margin: 0 10px
-        color: #fff
+      display: flex
+      justify-content: center
   .mobile
     .notes-wrap
       .topnav
@@ -224,7 +214,7 @@ export default {
           margin-right: 4%
           height: .52rem
           line-height: .52rem
-          font-size: $mobileFont-extra
+          font-size: $mobileFont-small
           &:nth-child(4),&:nth-child(8)
             margin-right: 0
           &:nth-child(n+5)
@@ -238,16 +228,16 @@ export default {
       .article-wrap
         margin-top: .4rem
         article
-          padding-bottom: .4rem
-          margin-bottom: .4rem
+          padding-bottom: .3rem
+          margin-bottom: .3rem
           .title
             font-size: $mobileFont-middle
             &:before
               display: none
           .info-wrap
-            padding: .25rem 0
+            padding: .25rem 0 .15rem 0
             span
-              font-size: $mobileFont-default
+              font-size: $mobileFont-small
               margin-right: .2rem
           .watch
             top: 1rem
@@ -256,7 +246,7 @@ export default {
               font-size: $mobileFont-just
             span
               margin-top: .05rem
-              font-size: $mobileFont-default
+              font-size: $mobileFont-small
           .content
             border-left: .06rem solid $home-thingray
             padding-left: .3rem
@@ -271,7 +261,7 @@ export default {
             font-size: $mobileFont-normal
             padding: .1rem 0 .1rem .36rem
       .pagination
-        margin: -.2rem 0 .2rem 0
+        margin-bottom: .2rem
         font-size: $mobileFont-normal
         span
           padding: .1rem .15rem

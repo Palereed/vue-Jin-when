@@ -144,11 +144,7 @@ export default {
         .el-submenu__title:hover, .el-menu-item:focus, .el-menu-item:hover, .el-menu-item.is-active
           background: $admin-navbgon
   .admin-content
-    height: 100%
-    min-height: 900px
     background: $admin-bg
-    padding-top: 60px
-    box-sizing: border-box
     .content-top
       display: flex
       justify-content: space-between
@@ -159,7 +155,6 @@ export default {
       background: #fff
       padding: 0 30px
       box-sizing: border-box
-      margin-top: -60px
       .manager-wrap
         width: 50px
         height: 50px
@@ -174,18 +169,31 @@ export default {
         .el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover
           color: #000
     .main-content
-      height: 100%
       box-sizing: border-box
       padding: 30px
       .panel
-        height: 100%
         box-sizing: border-box
-        padding: 20px
+        padding: 20px 0
         border: 1px solid $admin-line
         background: #fff
         border-radius: 5px
+        min-height: 818px
         .pagination-wrap
-          margin: 30px 0
+          margin-top: 30px
           display: flex
           justify-content: center
+        .search-wrap,.panel-name
+          border-bottom: 1px solid $admin-line
+          padding: 0 20px
+          margin-bottom: 20px
+        .panel-name
+          padding-bottom: 20px
+          span
+            border-left: 4px solid $admin-navbg
+            margin-left: -10px
+            padding-left: 10px
+        .table-wrap,.form-wrap
+          padding: 0 20px
+        .form-wrap
+          width: $main-width
 </style>

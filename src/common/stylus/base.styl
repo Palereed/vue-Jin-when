@@ -14,24 +14,41 @@ body,html
 .for-just
   margin-bottom: 22px
 
-// element style
+// element样式
 .el-menu
   border-right: none
+  
+.el-form-item
+  margin-bottom: 20px
+
+.el-form-item__label
+  font-size: 14px
 
 .el-table .cell
   font-size: 12px
   display: flex
   justify-content: center
   align-items: center
+
 .el-table td, .el-table th
   padding: 8px 0
+
 .el-pagination.is-background .el-pager li:not(.disabled).active
   background: $home-navbg
 
-// mobile element style
+.el-pagination.is-background .el-pager li:not(.disabled):hover
+  color: #606266
+
+.el-pagination.is-background .el-pager li:not(.disabled).active:hover
+  color: #fff
+
+.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li
+  background: none
+
+// 移动端element样式
 .mobile .el-button--medium
   padding: .15rem .2rem
-  font-size: $mobileFont-extra
+  font-size: $mobileFont-small
 
 .mobile .for-just,.mobile .el-form-item
   margin-bottom: .3rem
@@ -40,7 +57,7 @@ body,html
   width: .8rem  !important
   line-height: .6rem;
   padding: 0 !important
-  font-size: $mobileFont-extra
+  font-size: $mobileFont-small
 
 .mobile .el-form-item__content
   line-height: 1
@@ -51,7 +68,7 @@ body,html
 
 .mobile .el-textarea__inner
   padding: .05rem .15rem
-  font-size: $mobileFont-extra
+  font-size: $mobileFont-small
 
 .mobile .el-input__inner
   padding: .05rem .15rem
@@ -60,8 +77,25 @@ body,html
 
 .mobile .el-form-item__error
   padding-top: .04rem
-  font-size: $mobileFont-default
+  font-size: $mobileFont-small
 
 .mobile .el-message
   width: 6rem
   min-width: 6rem
+
+// 富文本
+.mce-tinymce {
+  box-shadow: none !important
+}
+
+// 滚动条样式
+html::-webkit-scrollbar
+  width: 8px
+  height: 8px
+
+html::-webkit-scrollbar-thumb
+  border-radius: 8px
+  background: $home-navbg
+
+html::-webkit-scrollbar-track
+  border-radius: 8px

@@ -122,7 +122,7 @@ export default new Router({
     {
       // 不存在路由跳转至出错页
       path: '*',
-      component: resolve => require(['components/error.vue'], resolve)
+      component: resolve => require(['components/template/error.vue'], resolve)
     }
   ],
   linkActiveClass: 'active'

@@ -278,7 +278,7 @@ export default {
         .title
           font-size: $mobileFont-title
           i
-            font-size: $mobileFont-default
+            font-size: $mobileFont-small
         .navlist
           width: 3.2rem
           a

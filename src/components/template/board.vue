@@ -12,16 +12,16 @@
       </div>
       <div class="form-wrap">
         <!-- leave -->
-        <el-form label-width="60px" label-position="left" class="leave-form" :model="leaveForm" :rules="rulesLeave" v-show="leaveShow">
+        <el-form label-width="60px" label-position="left" class="leave-form" :model="leaveForm" :rules="rulesLeave" v-show="leaveShow" size="medium">
           <el-form-item label="内容：" prop="userleave">
             <el-input type="textarea" v-model="leaveForm.userleave" :autosize="{ minRows: 3, maxRows: 5}"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="medium" plain>留言</el-button>
+            <el-button plain>留言</el-button>
           </el-form-item>
         </el-form>
         <!-- login -->
-        <el-form label-width="60px" label-position="left" class="login-form" :model="loginForm" :rules="rulesLogin" v-show="loginShow">
+        <el-form label-width="60px" label-position="left" class="login-form" :model="loginForm" :rules="rulesLogin" v-show="loginShow" size="medium">
           <el-form-item label="账号：" prop="username">
             <el-input v-model="loginForm.username"></el-input>
           </el-form-item>
@@ -29,12 +29,12 @@
             <el-input v-model="loginForm.userpass" type="password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="medium" plain>登陆</el-button>
-            <el-button size="medium" plain @click="toggleRegister">注册</el-button>
+            <el-button plain>登陆</el-button>
+            <el-button plain @click="toggleRegister">注册</el-button>
           </el-form-item>
         </el-form>
         <!-- register -->
-        <el-form label-width="90px" label-position="left" class="register-form" :model="registerForm" :rules="rulesRegister" v-show="registerShow">
+        <el-form label-width="90px" label-position="left" class="register-form" :model="registerForm" :rules="rulesRegister" v-show="registerShow" size="medium">
           <el-form-item label="账号：" prop="username">
             <el-input v-model="registerForm.username"></el-input>
           </el-form-item>
@@ -62,7 +62,7 @@
             <el-input v-model="registerForm.safepass"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button size="medium" plain>注册</el-button>
+            <el-button plain>注册</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -226,7 +226,7 @@ export default {
   },
   computed: {
     avatarRandom () {
-      let index = randomNum(0, this.avatarList.length, true)
+      let index = randomNum(0, this.avatarList.length)
       return this.avatarList[index]
     }
   },
@@ -255,7 +255,6 @@ export default {
   .board-wrap
     .message-form
       .title
-        font-size: $font-extra
         display: flex
         justify-content: space-between
         align-items: center
@@ -293,15 +292,15 @@ export default {
             width: 100%
             flex-wrap: wrap
             img
-              width: 100px
-              height: 100px
+              width: 80px
+              height: 80px
               border-radius: 50%
-              margin: 0 10px 10px 0
+              margin: 0 25px 10px 0
               cursor: pointer
           .avatarRandom
             img
-              width: 100px
-              height: 100px
+              width: 80px
+              height: 80px
               border-radius: 50%
   .mobile
     .board-wrap
