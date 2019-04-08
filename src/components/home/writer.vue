@@ -95,13 +95,13 @@ export default {
       .avatar
         border: 0
     .self-info
-      line-height: 2.5
       li
         display: flex
+        line-height: 2.5
         span
           width: 60px
+          flex: 0 0 auto
         p
-          flex: 1
           text-align: justify
         ul.version
           span

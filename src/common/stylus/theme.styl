@@ -1,0 +1,46 @@
+@import './variable.styl'
+
+navBoder()
+  border-right: none
+  [data-theme="theme1"] &
+    border-right: 1px solid $admin-navBoder-theme1
+
+navTitle()
+  color: #fff
+  [data-theme="theme1"] &
+    color: $base-color-theme1
+
+titleBorder()
+  border-bottom: none
+  [data-theme="theme1"] &
+    border-bottom: 2px solid $base-color-theme1
+
+navBack()
+  background: $admin-navbg
+  [data-theme="theme1"] &
+    background: $admin-navbg-theme1
+
+navBackon()
+  background: $admin-navbgon
+  [data-theme="theme1"] &
+    background: $admin-navbgon-theme1
+
+navFont()
+  color: $admin-navfont
+  [data-theme="theme1"] &
+    color: $admin-navfont-theme1
+
+navFonton()
+  color: $admin-navon
+  [data-theme="theme1"] &
+    color: $base-color-theme1
+
+panelName()
+  border-left: 4px solid $admin-navbg
+  [data-theme="theme1"] &
+    border-left: 4px solid $base-color-theme1
+
+breadCrumb()
+  color: #000000
+  [data-theme="theme1"] &
+    color: $base-color-theme1

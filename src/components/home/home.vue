@@ -134,8 +134,8 @@ export default {
       .title
         font-size: $font-big
         display: flex
-        flex-grow: .4
         align-items: center
+        flex-grow: .4
         i
           font-size: $font-default
           font-style: normal
@@ -143,6 +143,7 @@ export default {
           cursor: pointer
       .navlist
         width: 180px
+        flex-grow: .4
         a
           width: 100%
           height: 80px
@@ -240,6 +241,8 @@ export default {
         padding: 20px
         font-size: $font-default
         justify-content: space-between
+        a,span
+          display: inline-block
   .mobile
     .page-wrap
       overflow-x: hidden

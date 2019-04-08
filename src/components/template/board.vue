@@ -275,6 +275,7 @@ export default {
             cursor: pointer
             img
               width: 50px
+              height: 50px
               border-radius: 25px
           span
             margin-right: 10px
@@ -329,6 +330,7 @@ export default {
               transform: translateY(-.2rem)
               img
                 width: .8rem
+                height: .8rem
                 border-radius: .4rem
             span
               margin-right: .1rem

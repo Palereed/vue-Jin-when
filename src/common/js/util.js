@@ -88,9 +88,9 @@ export function urlParse () {
  * id
  * key   属性名
  * value 属性值
- * saveToLocal ("__Score__", "小明", "得分数", 50)
+ * saveToLocal ("__Score__", "小明", 50)
 */
-export function saveToLocal (STORAGE_KEY, id, key, value) {
+export function saveToLocal (STORAGE_KEY, id, value) {
   let storage = window.localStorage.getItem(STORAGE_KEY)
   if (!storage) {
     storage = {}
@@ -101,29 +101,6 @@ export function saveToLocal (STORAGE_KEY, id, key, value) {
       storage[id] = {}
     }
   }
-  storage[id][key] = value
+  storage[id] = value
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(storage))
-}
-
-/* localStorage读取
- * STORAGE_KEY 仓库名
- * id
- * key 属性名
- * def 默认值
- * loadFormLocal ("__Score__", "小明", "得分数", 0)
-*/
-export function loadFormLocal (STORAGE_KEY, id, key, def) {
-  let storage = window.localStorage.getItem(STORAGE_KEY)
-  // 没有storage返回默认值
-  if (!storage) {
-    return def
-  }
-  // 字符串转化为json对象
-  storage = JSON.parse(storage)[id]
-  // 取不到返回默认值
-  if (!storage) {
-    return def
-  }
-  let ret = storage[key]
-  return ret || def
 }

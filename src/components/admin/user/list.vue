@@ -4,11 +4,11 @@
     <div class="search-wrap">
       <el-form :inline="true" size="small">
         <el-form-item label="用户名">
-          <el-input placeholder="请输入用户名" ></el-input>
+          <el-input placeholder="请输入用户名" v-model="searchVal"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" >查询</el-button>
-          <el-button plain >重置</el-button>
+          <el-button plain @click="resetSearch">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -21,7 +21,7 @@
           prop="id"
           align="center"
           label="编号"
-          width="200">
+          width="220">
         </el-table-column>
         <el-table-column
           prop="name"
@@ -81,6 +81,7 @@
 export default {
   data () {
     return {
+      searchVal: '',
       tableData: [{
         id: '222222',
         name: '王小虎',
@@ -166,6 +167,9 @@ export default {
     },
     deleteUser (id) {
       console.log(id)
+    },
+    resetSearch () {
+      this.searchVal = ''
     }
   }
 }

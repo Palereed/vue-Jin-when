@@ -104,8 +104,8 @@ export default {
   },
   props: {
     value: {
-      default: '',
-      type: String
+      type: String,
+      default: ''
     },
     config: {
       type: Object,
@@ -131,10 +131,6 @@ export default {
     appearance: {
       default: true,
       type: Boolean
-    },
-    value: {
-      type: String,
-      default: ''
     },
     isToken: {
       type: Boolean,
@@ -218,7 +214,7 @@ export default {
       window.tinymce.get(`editor`).setContent(value)
     },
     getContent () {
-      window.tinymce.get(`editor`).getContent('22')
+      window.tinymce.get(`editor`).getContent()
     }
   },
   // watch: {
@@ -231,20 +227,15 @@ export default {
   //   }
   // },
   mounted () {
-    console.log('init')
     this.init()
-    this.setContent ('22')
   },
   activated () {
-    console.log('activated')
     this.init()
   },
   deactivated () {
-    console.log('deactivated')
     this.destroyTinymce()
   },
   destroyed () {
-    console.log('destroyed')
     this.destroyTinymce()
   }
 }
