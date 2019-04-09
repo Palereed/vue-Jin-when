@@ -1,5 +1,11 @@
 export const navList = [
   {
+    text: '管家统计',
+    icon: 'el-icon-date',
+    vueRouter: '/admin/data',
+    nodes: []
+  },
+  {
     text: '用户管理',
     icon: 'el-icon-menu icon-user-o',
     vueRouter: '/admin/user/list',

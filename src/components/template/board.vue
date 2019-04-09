@@ -62,7 +62,7 @@
             <el-input v-model="registerForm.safepass"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button plain>注册</el-button>
+            <el-button plain @click="register">注册</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -72,6 +72,7 @@
 
 <script>
 import {randomNum} from 'common/js/util'
+import {userRegister} from 'api/api'
 const AVATAR_LIST = [
   '/static/images/visit1.jpg',
   '/static/images/visit2.jpg',
@@ -203,7 +204,8 @@ export default {
         nickname: '',
         userpass: '',
         checkpass: '',
-        safepass: ''
+        safepass: '',
+        avatar: ''
       },
       rulesRegister: {
         username: [
@@ -245,6 +247,12 @@ export default {
       this.toChoose = true
       let src = e.target.getAttribute('src')
       this.whichAvatar = src
+      this.registerForm.avatar = src
+    },
+    register () {
+      userRegister(this.registerForm).then(res => {
+        console.log(res)
+      })
     }
   }
 }

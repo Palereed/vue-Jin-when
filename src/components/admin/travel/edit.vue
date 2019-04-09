@@ -41,10 +41,4 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
-  .textarea-info
-    position: relative
-    float: right
-    margin: -45px 20px 0 0
-    font-size: 12px
-    color: $home-gray
 </style>

@@ -64,7 +64,14 @@ export default new Router({
       path: '/admin',
       meta: { title: '喵管家', keepAlive: false },
       component: resolve => require(['components/admin/admin'], resolve),
+      redirect: '/admin/data',
       children: [{
+        // 管家统计
+        path: '/admin/data',
+        meta: { title: '管家统计', keepAlive: false },
+        component: resolve => require(['components/admin/data/data'], resolve)
+      },
+      {
         // 用户列表
         path: '/admin/user/list',
         meta: { title: '用户管理', keepAlive: false },

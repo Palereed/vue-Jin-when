@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import {navList} from 'api/nav'
 import navMenu from 'components/admin/menu'
+import {navList} from './nav'
 export default {
   data () {
     return {
