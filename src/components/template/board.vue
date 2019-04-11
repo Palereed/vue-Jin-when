@@ -4,24 +4,25 @@
       <div class="title">
         <h2>{{title}}</h2>
         <div class="login">
-          <span @click="toggleLogin"><i class="icon-sign-in"></i>{{warning}}</span>
+          <span @click="toggleLogin" v-if="!nickName"><i class="icon-sign-in"></i>{{warning}}</span>
+          <span else="nickName" @click="logout">{{nickName}}</span>
           <div class="login-btn">
-            <img src="/static/images/owner.jpg">
+            <img :src="userAvatar" v-show="userAvatar">
           </div>
         </div>
       </div>
       <div class="form-wrap">
         <!-- leave -->
-        <el-form label-width="60px" label-position="left" class="leave-form" :model="leaveForm" :rules="rulesLeave" v-show="leaveShow" size="medium">
+        <el-form label-width="60px" ref="leave" label-position="left" class="leave-form" :model="leaveForm" :rules="rulesLeave" v-show="leaveShow" size="medium">
           <el-form-item label="内容：" prop="userleave">
             <el-input type="textarea" v-model="leaveForm.userleave" :autosize="{ minRows: 3, maxRows: 5}"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button plain>留言</el-button>
+            <el-button plain @click="leave">留言</el-button>
           </el-form-item>
         </el-form>
         <!-- login -->
-        <el-form label-width="60px" label-position="left" class="login-form" :model="loginForm" :rules="rulesLogin" v-show="loginShow" size="medium">
+        <el-form label-width="60px" ref="login" label-position="left" class="login-form" :model="loginForm" :rules="rulesLogin" v-show="loginShow" size="medium">
           <el-form-item label="账号：" prop="username">
             <el-input v-model="loginForm.username"></el-input>
           </el-form-item>
@@ -29,12 +30,12 @@
             <el-input v-model="loginForm.userpass" type="password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button plain>登陆</el-button>
+            <el-button plain @click="login">登陆</el-button>
             <el-button plain @click="toggleRegister">注册</el-button>
           </el-form-item>
         </el-form>
         <!-- register -->
-        <el-form label-width="90px" label-position="left" class="register-form" :model="registerForm" :rules="rulesRegister" v-show="registerShow" size="medium">
+        <el-form label-width="90px" ref="register" label-position="left" class="register-form" :model="registerForm" :rules="rulesRegister" v-show="registerShow" size="medium">
           <el-form-item label="账号：" prop="username">
             <el-input v-model="registerForm.username"></el-input>
           </el-form-item>
@@ -71,8 +72,8 @@
 </template>
 
 <script>
-import {randomNum} from 'common/js/util'
-import {userRegister} from 'api/api'
+import {randomNum, saveSession, getSession} from 'common/js/util'
+import {userRegister, userLogin, userMessage, userInfo} from 'api/api'
 const AVATAR_LIST = [
   '/static/images/visit1.jpg',
   '/static/images/visit2.jpg',
@@ -176,10 +177,22 @@ export default {
       leaveShow: true,
       loginShow: false,
       registerShow: false,
-      toChoose: false, // 是否选择头像
-      whichAvatar: '', // 选择头像
+      // 是否选择头像
+      toChoose: false,
+      // 选择头像
+      whichAvatar: '',
+      // 头像列表
       avatarList: AVATAR_LIST,
+      // 用户昵称
+      nickName: '',
+      // 用户头像
+      userAvatar: '',
+      // 留言表单
       leaveForm: {
+        userid: '',
+        username: '',
+        nickname: '',
+        avatar: '',
         userleave: ''
       },
       rulesLeave: {
@@ -187,6 +200,7 @@ export default {
           { validator: checkUserLeave, trigger: 'blur' }
         ]
       },
+      // 登录表单
       loginForm: {
         username: '',
         userpass: ''
@@ -199,6 +213,7 @@ export default {
           { validator: checkLoginPass, trigger: 'blur' }
         ]
       },
+      // 注册表单
       registerForm: {
         username: '',
         nickname: '',
@@ -228,9 +243,13 @@ export default {
   },
   computed: {
     avatarRandom () {
-      let index = randomNum(0, this.avatarList.length)
+      let index = randomNum(0, this.avatarList.length - 1)
       return this.avatarList[index]
     }
+  },
+  mounted () {
+    this.whichAvatar = this.avatarRandom
+    this.userInfo ()
   },
   methods: {
     toggleLogin () {
@@ -243,15 +262,141 @@ export default {
       this.loginShow = false
       this.registerShow = true
     },
+    toggleLeave () {
+      this.leaveShow = true
+      this.loginShow = false
+      this.registerShow = false
+    },
     chooseAvatar (e) {
       this.toChoose = true
       let src = e.target.getAttribute('src')
       this.whichAvatar = src
-      this.registerForm.avatar = src
     },
+    // 用户注册
     register () {
-      userRegister(this.registerForm).then(res => {
-        console.log(res)
+      this.registerForm.avatar = this.whichAvatar
+      this.$refs['register'].validate((valid) => {
+        if (valid) {
+          userRegister(this.registerForm).then((res) => {
+            if (res.data.code === 0) {
+              // 注册成功
+              this.$message({
+                message: res.data.message,
+                type: 'success'
+              })
+              // 注册表单重置
+              this.$refs['register'].resetFields()
+              // 转至登录表单
+              setTimeout(() => {
+                this.toggleLogin()
+              }, 1000)
+            } else {
+              // 已被注册
+              this.$message.error(res.data.message)
+            }
+          })
+        } else {
+          this.$message.error('请填写必填字段')
+        }
+      })
+    },
+    // 用户登录
+    login () {
+      this.$refs['login'].validate((valid) => {
+        if (valid) {
+          userLogin(this.loginForm).then((res) => {
+            if (res.data.code === 0) {
+              // 登录成功
+              this.$message({
+                message: res.data.message,
+                type: 'success'
+              })
+              saveSession('userinfo',res.data.info)
+              this.userInfo ()
+              // 登录表单重置
+              this.$refs['login'].resetFields()
+              // 转至留言
+              setTimeout(() => {
+                this.toggleLeave()
+              }, 1000)
+            } else {
+              this.$message.error(res.data.message)
+            }
+          })
+        } else {
+          this.$message.error('请填写必填字段')
+        }
+      })
+    },
+    // 若用户已登录，session已存有数据，取出即可。
+    userInfo () {
+      let info = getSession('userinfo')
+      this.userAvatar = info.avatar
+      this.nickName = info.nickname
+    },
+    // 注销
+    logout () {
+      this.$confirm('确定要注销用户么?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '注销成功!'
+        })
+        // 删除登录状态与清空userinfo
+        this.userAvatar = ''
+        this.nickName = ''
+        saveSession('userinfo',{})
+        // 留言表单重置
+        this.$refs['leave'].resetFields()
+        // 转至登录表单
+        setTimeout(() => {
+          this.toggleLogin()
+        }, 1000)
+      }).catch(() => {
+        console.log('取消注销')       
+      })
+    },
+    // 用户留言
+    leave () {
+      this.$refs['leave'].validate((valid) => {
+        if (valid) {
+          // 查询用户，获取用户信息
+          let userid = getSession('userinfo').id
+          // 未登录状态
+          if (!userid) {
+            this.$message.error('宝贝，请先登录再留言~')
+            return
+          }
+          userInfo(userid).then((res) => {
+            this.leaveForm.userid = res.data.info[0]._id
+            this.leaveForm.username = res.data.info[0].username
+            this.leaveForm.nickname = res.data.info[0].nickname
+            this.leaveForm.avatar = res.data.info[0].avatar
+            // 留言
+            userMessage(this.leaveForm).then((res) => {
+              if (res.data.code === 0) {
+                // 留言成功
+                this.$message({
+                  message: res.data.message,
+                  type: 'success'
+                })
+                // 留言表单重置
+                this.$refs['leave'].resetFields()
+                // Vue bus传递用户已留言信号，message重新拉取数据
+                this.$bus.$emit('hasLeave', {
+                  hasLeave : true
+                })
+              } else {
+                this.$message.error(res.data.message)
+              }
+            })
+          })
+        } else {
+          this.$message.error('请填写必填字段')
+        }
       })
     }
   }

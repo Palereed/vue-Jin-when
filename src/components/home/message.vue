@@ -16,9 +16,9 @@
           <img :src="message.avatar">
         </div>
         <div class="content">
-          <span class="name">{{message.name}}</span>
+          <span class="name">{{message.nickname}}</span>
           <span class="time">
-            留言于<b>{{message.time}}</b>
+            留言于<b>{{ formatTime(message.leavetime,'yyyy-MM-dd hh:mm') }}</b>
           </span>
           <p>{{message.content}}</p>
         </div>
@@ -64,7 +64,7 @@
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="12">
+        :total="messageList.length">
       </el-pagination>
     </div>
     <!-- 留言部分 -->
@@ -74,47 +74,21 @@
 
 <script>
 import Board from 'components/template/board'
+import {messageList} from 'api/api'
+import {formatDate} from 'common/js/util'
 export default {
   data () {
     return {
-      messageList: [{
-        avatar: '/static/images/visit4.jpg',
-        name: '非酋',
-        time: '2018-08-22 15:16:26',
-        content: '说好的更新，未完待续呢',
-        answerShow: false, // 回复是否显示
-        formShow: false, // 回复框是否显示
-        answerList: [{
-          avatar: '/static/images/visit4.jpg',
-          name: '非酋',
-          time: '2018-08-22 15:16:26',
-          content: '说好的更新，未完待续呢'
-        },
-        {
-          avatar: '/static/images/visit4.jpg',
-          name: '非酋',
-          time: '2018-08-22 15:16:26',
-          content: '说好的更新，未完待续呢'
-        }]
-      },
-      {
-        avatar: '/static/images/visit2.jpg',
-        name: '蒹葭',
-        time: '2018-08-22 15:16:26',
-        content: '说好的更新，未完待续呢',
-        answerShow: false,
-        formShow: false,
-        answerList: [{
-          avatar: '/static/images/visit2.jpg',
-          name: '蒹葭',
-          time: '2018-08-22 15:16:26',
-          content: '说好的更新，未完待续呢'
-        }]
-      }]
+      messageList: [],
+      hasLeave: false
     }
   },
   created () {
     this.commentText = this.answerNumber
+    this.getMessage()
+    this.$bus.$on('hasLeave', (params) => {
+      this.hasLeave = params.hasLeave
+    })
   },
   methods: {
     // 回复toggle
@@ -124,10 +98,28 @@ export default {
     // 回复框toggle
     toggleForm: function (message) {
       message.formShow = !message.formShow
+    },
+    // 获取留言列表
+    getMessage: function() {
+      messageList().then((res) => {
+        this.messageList = res.data
+      })
+    },
+    // 时间格式化
+    formatTime (time,formate) {
+      return formatDate(time,formate)
     }
   },
   components: {
     Board
+  },
+  watch: {
+    hasLeave: function (hasLeave)  {
+      if (hasLeave) {
+        this.getMessage()
+        this.hasLeave = false
+      }
+    }
   }
 }
 </script>

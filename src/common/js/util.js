@@ -36,10 +36,11 @@ export function insertArray (arr1, arr2, index) {
 }
 
 /* 日期格式化
- * data 日期 object
+ * time 日期 object
  * format 输出格式 string 如yyyy-MM-dd hh:mm
 */
-export function formatDate (date, format) {
+export function formatDate (time, format) {
+  let date = new Date(time)
   if (/(y+)/.test(format)) {
     format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
   }
@@ -85,8 +86,7 @@ export function urlParse () {
 
 /* localStorage存储
  * STORAGE_KEY 仓库名
- * id
- * key   属性名
+ * id 属性名
  * value 属性值
  * saveToLocal ("__Score__", "小明", 50)
 */
@@ -103,4 +103,24 @@ export function saveToLocal (STORAGE_KEY, id, value) {
   }
   storage[id] = value
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(storage))
+}
+
+/* sessionStorage存储
+ * STORAGE_KEY 仓库名
+ * value 属性值
+ * saveToSession ("__Score__", "小明", 50)
+*/
+export function saveSession (STORAGE_KEY, value) {
+  window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(value))
+}
+
+/* sessionStorage读取
+ * STORAGE_KEY 仓库名
+*/
+export function getSession (STORAGE_KEY) {
+  let storage = sessionStorage.getItem(STORAGE_KEY)
+  if (!storage) {
+    return {}
+  }
+  return JSON.parse(storage)
 }

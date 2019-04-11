@@ -10,6 +10,9 @@ import 'babel-polyfill'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
+// Vue bus
+Vue.prototype.$bus = new Vue()
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

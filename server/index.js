@@ -15,9 +15,8 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
   if (req.method == 'OPTIONS') {
     // 让options请求快速返回
-    res.send(200)
-  }
-  else {
+    res.status(200).send('OPTIONS')
+  } else {
     next()
   }
 })
