@@ -42,6 +42,20 @@ export function userInfo (id) {
 }
 
 // 留言列表
-export function messageList () {
-  return axios.get('/message/list')
+export function messageList (num) {
+  return axios.post('/message/list', {
+    page: num
+  })
+}
+
+// 留言回复
+export function userAnswer (params) {
+  return axios.post('/message/answer', {
+    messageid: params.messageid,
+    userid: params.userid,
+    username: params.username,
+    nickname: params.nickname,
+    avatar: params.avatar,
+    answer: params.useranswer
+  })
 }

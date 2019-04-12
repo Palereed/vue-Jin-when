@@ -249,7 +249,7 @@ export default {
   },
   mounted () {
     this.whichAvatar = this.avatarRandom
-    this.userInfo ()
+    this.userInfo()
   },
   methods: {
     toggleLogin () {
@@ -289,7 +289,7 @@ export default {
               // 转至登录表单
               setTimeout(() => {
                 this.toggleLogin()
-              }, 1000)
+              }, 500)
             } else {
               // 已被注册
               this.$message.error(res.data.message)
@@ -311,14 +311,14 @@ export default {
                 message: res.data.message,
                 type: 'success'
               })
-              saveSession('userinfo',res.data.info)
-              this.userInfo ()
+              saveSession('userinfo', res.data.info)
+              this.userInfo()
               // 登录表单重置
               this.$refs['login'].resetFields()
               // 转至留言
               setTimeout(() => {
                 this.toggleLeave()
-              }, 1000)
+              }, 500)
             } else {
               this.$message.error(res.data.message)
             }
@@ -348,15 +348,15 @@ export default {
         // 删除登录状态与清空userinfo
         this.userAvatar = ''
         this.nickName = ''
-        saveSession('userinfo',{})
+        saveSession('userinfo', {})
         // 留言表单重置
         this.$refs['leave'].resetFields()
         // 转至登录表单
         setTimeout(() => {
           this.toggleLogin()
-        }, 1000)
+        }, 500)
       }).catch(() => {
-        console.log('取消注销')       
+        console.log('取消注销')
       })
     },
     // 用户留言
@@ -368,9 +368,21 @@ export default {
           // 未登录状态
           if (!userid) {
             this.$message.error('宝贝，请先登录再留言~')
+            // 留言表单重置
+            this.$refs['leave'].resetFields()
+            // 转至登录表单
+            setTimeout(() => {
+              this.toggleLogin()
+            }, 500)
             return
           }
           userInfo(userid).then((res) => {
+            // 登录后修改session,导致查不到id。
+            if (res.data.code === 1) {
+              this.$message.error(res.data.message)
+              this.$refs['leave'].resetFields()
+              return
+            }
             this.leaveForm.userid = res.data.info[0]._id
             this.leaveForm.username = res.data.info[0].username
             this.leaveForm.nickname = res.data.info[0].nickname
@@ -387,15 +399,13 @@ export default {
                 this.$refs['leave'].resetFields()
                 // Vue bus传递用户已留言信号，message重新拉取数据
                 this.$bus.$emit('hasLeave', {
-                  hasLeave : true
+                  hasLeave: true
                 })
-              } else {
-                this.$message.error(res.data.message)
               }
             })
           })
         } else {
-          this.$message.error('请填写必填字段')
+          this.$message.error('留言不能为空~')
         }
       })
     }
