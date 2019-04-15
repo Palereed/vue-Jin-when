@@ -59,3 +59,23 @@ export function userAnswer (params) {
     answer: params.useranswer
   })
 }
+
+// 文章发布
+export function notesEdit (params) {
+  return axios.post('/notes/edit', {
+    title    : params.title,
+    classifyVal : params.classifyVal,
+    content  : params.content,
+    abstract : params.abstract,
+    writer   : params.writer,
+    radio    : params.radio,
+    link     : params.link
+  })
+}
+
+// 文章列表
+export function notesList (num) {
+  return axios.post('/notes/list', {
+    page: num
+  })
+}

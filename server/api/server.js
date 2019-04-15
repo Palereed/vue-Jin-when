@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user') // 用户
 const Message = require('../models/message') // 留言
+const Note = require('../models/note') // 文章
 var ObjectID = require('mongodb').ObjectID
 // 返回对象
 let resData = {
@@ -144,7 +145,7 @@ router.post('/message/list', (req, res, next) => {
     }).catch((err) => {
       console.log("ERROR:" + err)
     })
-  })  
+  })
 })
 
 // 用户回复
@@ -175,6 +176,59 @@ router.post('/message/answer', (req, res, next) => {
     return next()
   }).catch((err) => {
     console.log("ERROR:" + err)
+  })
+})
+
+// 文章发布
+router.post('/notes/edit', (req, res, next) => {
+  let title    = req.body.title
+  let classifyVal = req.body.classifyVal
+  let content  = req.body.content
+  let abstract = req.body.abstract
+  let writer   = req.body.writer
+  let radio    = req.body.radio
+  let link     = req.body.link
+  let note = new Note({
+    title    : title,
+    classifyVal : classifyVal,
+    content  : content,
+    abstract : abstract,
+    writer   : writer,
+    radio    : radio,
+    link     : link,
+    time     : new Date()
+  })
+  note.save()
+  resData.code = 0
+  resData.message = '发布成功'
+  res.send(resData)
+  return next()
+})
+
+// 文章列表
+router.post('/notes/list', (req, res, next) => {
+  // 读取数据条数 limit(Number)，默认展示第一页
+  let page = req.body.page || 1
+  let limit = 8
+  let list = {}
+  // 数据库中数据条数
+  Note.count({
+  }).then((count) => {
+    // 跳过数据条数 skip(Number)
+    let skip = (page - 1) * limit
+    Note.find({
+    }).sort({
+      "time": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.note = data
+      // 需要给前端留言数据总长度
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
   })
 })
 

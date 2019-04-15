@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import {notesList} from 'api/api'
 export default {
   data () {
     return {
@@ -163,6 +164,9 @@ export default {
       }]
     }
   },
+  created () {
+    this.getList()
+  },
   methods: {
     editUser (id) {
       console.log(id)
@@ -173,6 +177,12 @@ export default {
     resetSearch () {
       this.searchVal = ''
       this.classifyVal = ''
+    },
+    // 文章列表
+    getList () {
+      notesList().then((res) => {
+        console.log(res)
+      })
     }
   }
 }

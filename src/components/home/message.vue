@@ -87,7 +87,7 @@
 <script>
 import Board from 'components/template/board'
 import {messageList, userInfo, userAnswer} from 'api/api'
-import {formatDate, randomNum, saveSession, getSession} from 'common/js/util'
+import {formatDate, getSession} from 'common/js/util'
 export default {
   data () {
     // answerForm
@@ -121,12 +121,7 @@ export default {
         useranswer: [
           { validator: checkUserAnswer, trigger: 'blur' }
         ]
-      },
-    }
-  },
-  computed: {
-    answerWhich () {
-      return 
+      }
     }
   },
   created () {
@@ -148,7 +143,7 @@ export default {
         this.answerIndex = -1
       }
       // 留言表单重置
-      for (let i=0; i<this.$refs['answer'].length; i++) {
+      for (let i = 0; i < this.$refs['answer'].length; i++) {
         this.$refs['answer'][i].resetFields()
       }
       this.answerIndex = index
@@ -209,7 +204,7 @@ export default {
                 })
                 // 渲染一下回复数据
                 let li = document.createElement('li')
-                let time = this.formatTime(new Date(),'yyyy-MM-dd hh:mm')
+                let time = this.formatTime(new Date(), 'yyyy-MM-dd hh:mm')
                 li.className = 'answer-wrap'
                 li.innerHTML = `
                   <div class="avatar">
@@ -366,7 +361,7 @@ export default {
             line-height 1.3
       .no-message
         font-size: $mobileFont-title
-        margin: 1rem 0      
+        margin: 1rem 0
       .message-list
         .message
           border-bottom: 1px solid $home-line
