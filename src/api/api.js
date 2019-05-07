@@ -60,16 +60,29 @@ export function userAnswer (params) {
   })
 }
 
+// 分类添加
+export function classAdd (name) {
+  return axios.post('/notes/class', {
+    name: name
+  })
+}
+
+// 分类获取
+export function classList () {
+  return axios.get('/notes/classList')
+}
+
 // 文章发布
 export function notesEdit (params) {
   return axios.post('/notes/edit', {
-    title    : params.title,
-    classifyVal : params.classifyVal,
-    content  : params.content,
-    abstract : params.abstract,
-    writer   : params.writer,
-    radio    : params.radio,
-    link     : params.link
+    title: params.title,
+    classifyVal: params.classifyVal,
+    content: params.content,
+    preface: params.preface,
+    abstract: params.abstract,
+    writer: params.writer,
+    radio: params.radio,
+    link: params.link
   })
 }
 
@@ -78,4 +91,19 @@ export function notesList (num) {
   return axios.post('/notes/list', {
     page: num
   })
+}
+
+// 独白发布
+export function recordsEdit (params) {
+  return axios.post('/record/edit', {
+    title: params.title,
+    spirit: params.spirit,
+    weather: params.weather,
+    content: params.content
+  })
+}
+
+// 独白列表
+export function recordsList () {
+  return axios.get('/record/list')
 }

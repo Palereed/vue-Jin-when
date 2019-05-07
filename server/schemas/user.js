@@ -5,10 +5,10 @@ module.exports = new Schema({
   userpass  : String,  // 密码
   nickname  : String,  // 昵称
   avatar    : String,  // 头像
-  safe      : Number,  // 密保
+  safepass  : Number,  // 密保
   time      : Date,    // 注册时间
   isAdmin   : {        // 是否为管理员
     type: Boolean,
-    default: false
+    default: true
   }
 })

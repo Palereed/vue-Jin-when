@@ -63,16 +63,10 @@ export default {
       background: url("/static/images/maomi.jpg") no-repeat center
       &:hover
         animation: swing 1s
-        -moz-animation: swing 1s
-        -webkit-animation: swing 1s
-        -o-animation: swing 1s
     .welcome
       font-size: $font-just
       &:hover
         animation: tada 1s
-        -moz-animation: tada 1s
-        -webkit-animation: tada 1s
-        -o-animation: tada 1s
   .mobile
     .wrap
       .title

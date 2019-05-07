@@ -6,19 +6,22 @@
       <i class="icon-quote-right"></i>
     </div>
     <div class="event-wrap" ref="eventWrap">
-      <div class="timer-shaft"></div>
+      <!-- 独白加载 -->
+      <loading :data="recordsList"></loading>
+      <div class="timer-shaft" v-show="recordsList.length"></div>
+      <!-- 独白列表 -->
       <div class="event-list">
-        <div class="event-item" v-for="record in recordList" :key="record.id" ref="record">
+        <div class="event-item" v-for="record in recordsList" :key="record.id" ref="record">
           <div class="time-info">
             <span class="anchor"></span>
             <span class="line"></span>
             <span class="weather">{{record.weather}}</span>
             <span class="spirit">{{record.spirit}}</span>
-            <span class="time">{{record.time}}</span>
+            <span class="time">{{formatTime(record.time,'yyyy-MM-dd')}}</span>
           </div>
           <div class="time-content">
             <h3>{{record.title}}</h3>
-            <p>{{record.content}}</p>
+            <p v-html="record.content"></p>
           </div>
         </div>
         <div class="event-item" ref="loading">
@@ -34,52 +37,47 @@
 </template>
 
 <script>
+import {recordsList} from 'api/api'
+import {formatDate} from 'common/js/util'
+import Loading from 'components/template/loading'
 export default {
   data () {
     return {
       title: '人生不如意之事七八九，苦事；终归还能与人言一二三，幸事。',
-      ending: 'Loading...(未完待续)'
+      ending: '未完待续...',
+      recordsList: []
     }
-  },
-  computed: {
-  },
-  mounted () {
-    let recordLenth = this.$refs.record.length
-    let heightList = []
-    let height = 0
-    for (let i = 0; i < recordLenth; i++) {
-      height += this.$refs.record[i].clientHeight
-      heightList.push(height)
-    }
-    this.$refs.eventWrap.style.height = height + 18 + 'px'
-    this.$refs.record.forEach((item, index) => {
-      item.style.top = heightList[index - 1] + 'px'
-    })
-    this.$refs.loading.style.top = heightList[recordLenth - 1] + 'px'
   },
   created () {
-    this.recordList = [{
-      weather: '晴',
-      spirit: '开心',
-      time: 'June 16th, 2018',
-      title: '锦时上线啦',
-      content: '经过购买域名，备案，调试端口，增补漏洞，这个网站终于上线了。虽然或多或少有一点不尽人意，但是会在以后的学习之路的完善这个网站，这里会有我在前端之路上前进的脚印的。为自己加油。'
+    this.getRecords()
+  },
+  methods: {
+    getRecords () {
+      recordsList().then((res) => {
+        this.recordsList = res.data
+        this.$nextTick(() => {
+          let recordLenth = this.recordsList.length
+          let heightList = []
+          let height = 0
+          for (let i = 0; i < recordLenth; i++) {
+            height += this.$refs.record[i].clientHeight
+            heightList.push(height)
+          }
+          this.$refs.eventWrap.style.height = height + 18 + 'px'
+          this.$refs.record.forEach((item, index) => {
+            item.style.top = heightList[index - 1] + 'px'
+          })
+          this.$refs.loading.style.top = heightList[recordLenth - 1] + 'px'
+        })
+      })
     },
-    {
-      weather: '晴',
-      spirit: '开心',
-      time: 'June 16th, 2018',
-      title: '锦时上线啦',
-      content: '经过购买域名，备案，调试端口，增补漏洞，这个网站终于上线了。虽然或多或少有一点不尽人意，但是会在以后的学习之路的完善这个网站，这里会有我在前端之路上前进的脚印的。为自己加油。'
-    },
-    {
-      weather: '晴',
-      spirit: '开心',
-      time: 'June 16th, 2018',
-      title: '锦时上线啦',
-      content: '经过购买域名，备案，调试端口，增补漏洞，这个网站终于上线了。虽然或多或少有一点不尽人意，但是会在以后的学习之路的完善这个网站，这里会有我在前端之路上前进的脚印的。为自己加油前端之路上前进的。'
+    // 时间格式化
+    formatTime (time, formate) {
+      return formatDate(time, formate)
     }
-    ]
+  },
+  components: {
+    Loading
   }
 }
 </script>
@@ -87,7 +85,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
   .record-wrap
-    margin-bottom: 20px
     .event-wrap
       margin-top: 30px
       position: relative

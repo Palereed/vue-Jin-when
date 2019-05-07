@@ -34,12 +34,12 @@ export const navList = [
     icon: 'el-icon-edit',
     nodes: [
       {
-        text: '文章发布',
+        text: '独白发布',
         vueRouter: '/admin/record/edit',
         nodes: []
       },
       {
-        text: '文章管理',
+        text: '独白管理',
         vueRouter: '/admin/record/list',
         nodes: []
       }

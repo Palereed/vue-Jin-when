@@ -164,7 +164,7 @@ export default {
           justify-content: center
         .search-wrap,.panel-name
           border-bottom: 1px solid $admin-line
-          padding: 0 20px
+          padding: 0 16px
           margin-bottom: 20px
         .panel-name
           padding-bottom: 20px
@@ -173,7 +173,7 @@ export default {
             margin-left: -10px
             padding-left: 10px
         .table-wrap,.form-wrap,.content-wrap
-          padding: 0 20px
+          padding: 0 16px
         .form-wrap
-          width: $main-width
+          width: $main-width - 1
 </style>

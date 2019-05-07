@@ -11,10 +11,8 @@
     </div>
     <!-- 留言 -->
     <!-- 留言加载 -->
-    <div class="no-message"  v-if="!messageList.length">
-      <i class="el-icon-loading"></i>
-    </div>
-    <ul class="message-list" v-else>
+    <loading :data="messageList"></loading>
+    <ul class="message-list">
       <li class="message" v-for="(message,index) in messageList" :key="message.id">
         <div class="letter">
           <div class="avatar">
@@ -68,7 +66,7 @@
       </li>
     </ul>
     <!-- 分页部分 -->
-    <div class="pagination">
+    <div class="pagination" v-show="messageList.length">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -86,6 +84,7 @@
 
 <script>
 import Board from 'components/template/board'
+import Loading from 'components/template/loading'
 import {messageList, userInfo, userAnswer} from 'api/api'
 import {formatDate, getSession} from 'common/js/util'
 export default {
@@ -133,11 +132,11 @@ export default {
   },
   methods: {
     // 回复toggle
-    toggleAnswer: function (message) {
+    toggleAnswer (message) {
       message.answerShow = !message.answerShow
     },
     // 回复框toggle
-    toggleForm: function (index) {
+    toggleForm (index) {
       // 稍后回复，收起回复框
       if (!index) {
         this.answerIndex = -1
@@ -149,7 +148,7 @@ export default {
       this.answerIndex = index
     },
     // 获取留言列表
-    getMessage: function (num) {
+    getMessage (num) {
       // 置空留言列表，保证no-data出现
       this.messageList = []
       messageList(num).then((res) => {
@@ -231,7 +230,8 @@ export default {
     }
   },
   components: {
-    Board
+    Board,
+    Loading
   },
   watch: {
     hasLeave: function (hasLeave) {
@@ -272,10 +272,6 @@ export default {
           font-size: $font-normal
           font-weight: 700
           margin-bottom: 10px
-    .no-message
-      text-align: center
-      font-size: $font-title
-      margin: 100px 0
     .message-list
       .message
         border-bottom: 1px solid $home-line
@@ -359,9 +355,6 @@ export default {
           p
             font-size: $mobileFont-normal
             line-height 1.3
-      .no-message
-        font-size: $mobileFont-title
-        margin: 1rem 0
       .message-list
         .message
           border-bottom: 1px solid $home-line

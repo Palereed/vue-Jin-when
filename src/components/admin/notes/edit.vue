@@ -13,12 +13,13 @@
         <el-form-item label="分类" prop="classifyVal">
           <el-select v-model="formParams.classifyVal" placeholder="请选择">
             <el-option
-              v-for="item in classify"
+              v-for="item in classifyList"
               :key="item.value"
               :label="item.label"
               :value="item.value">
             </el-option>
           </el-select>
+          <el-button type="primary" style="margin-left:10px" @click="showClassDia">新 增</el-button>
         </el-form-item>
         <el-form-item label="正文内容" prop="content">
           <!-- 富文本 -->
@@ -30,6 +31,12 @@
             :projectId="1"
             v-model="formParams.content">
           </tinymce>
+        </el-form-item>
+        <el-form-item label="引语" prop="preface">
+          <el-input
+            placeholder="请输入引语"
+            v-model="formParams.preface">
+          </el-input>
         </el-form-item>
         <el-form-item label="文章摘要" prop="abstract">
           <el-input
@@ -55,23 +62,6 @@
         <el-form-item label="文章来源" v-show="formParams.radio === '转载'" prop="link">
           <el-input type="text" placeholder="请输入文章来源" v-model="formParams.link"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="是否定时发送">
-          <el-checkbox
-            label="定时发送"
-            v-model="isTiming">
-            定时发送
-          </el-checkbox>
-        </el-form-item>
-        <el-form-item label="定时发送" v-show="isTiming" prop="time">
-          <el-date-picker
-            clearable
-            format="yyyy-MM-dd HH:mm"
-            v-model="formParams.time"
-            :editable="true"
-            type="datetime"
-            placeholder="选择日期时间">
-          </el-date-picker>
-        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="showDia">预 览</el-button>
           <el-button plain @click="publish">发 布</el-button>
@@ -91,6 +81,20 @@
         </p>
         <div v-html="formParams.content"></div>
       </el-dialog>
+      <el-dialog
+        class="article"
+        :visible.sync="classDia"
+        center>
+        <h2 class="title">添加文章分类</h2>
+        <el-form :inline="true">
+          <el-form-item label="分类名">
+            <el-input placeholder="请输入分类名" v-model="classify"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="addClassify">添加</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -98,7 +102,7 @@
 <script>
 import tinymce from '@/components/template/tinymce'
 import {formatDate} from 'common/js/util'
-import {notesEdit} from 'api/api'
+import {notesEdit, classAdd, classList} from 'api/api'
 window.tinymce.baseURL = '/static/tinymce'
 window.tinymce.suffix = '.min'
 export default {
@@ -108,6 +112,7 @@ export default {
         'title': '',
         'classifyVal': '',
         'content': '',
+        'preface': '',
         'abstract': '',
         'writer': '',
         'radio': '原创',
@@ -121,6 +126,12 @@ export default {
         classifyVal: [
           { required: true, message: '请选择分类', trigger: 'change' }
         ],
+        content: [
+          { required: true, message: '请选择内容', trigger: 'change' }
+        ],
+        preface: [
+          { required: true, message: '请输入引语', trigger: 'blur' }
+        ],
         abstract: [
           { required: true, message: '请输入摘要', trigger: 'blur' }
         ],
@@ -128,22 +139,67 @@ export default {
           { required: true, message: '请输入作者', trigger: 'blur' }
         ]
       },
-      classify: [
-        {value: 'Vue', label: 'Vue'},
-        {value: 'Js', label: 'Js'},
-        {value: 'Css', label: 'Css'}
-      ],
+      classify: '',
+      classifyList: [],
       hasPublish: false,
-      dialogVisible: false
+      dialogVisible: false,
+      classDia: false
     }
+  },
+  created () {
+    // 获取文章分类
+    this.getClassify()
   },
   methods: {
     // 预览
     showDia () {
-      if ( !this.formParams.title ) {
+      if (!this.formParams.title) {
         return
       }
       this.dialogVisible = true
+    },
+    // 添加分类弹窗
+    showClassDia () {
+      this.classDia = true
+    },
+    // 分类获取
+    getClassify () {
+      classList().then((res) => {
+        // 无分类
+        if (!res.data.length) {
+          return
+        }
+        // 避免添加重复push
+        this.classifyList = []
+        // 有则将其处理为下拉框可用的格式
+        for (let i = 0; i < res.data.length; i++) {
+          this.classifyList.push({
+            value: res.data[i].name,
+            label: res.data[i].name
+          })
+        }
+      })
+    },
+    // 添加分类
+    addClassify () {
+      if (!this.classify) {
+        this.$message.error('请输入分类名')
+      }
+      classAdd(this.classify).then((res) => {
+        if (res.data.code === 0) {
+          // 添加成功
+          this.$message({
+            message: res.data.message,
+            type: 'success'
+          })
+          this.classify = ''
+          // 再次获取分类
+          this.getClassify()
+        } else {
+          // 添加失败
+          this.$message.error(res.data.message)
+        }
+      })
     },
     // 发布
     publish () {
@@ -178,7 +234,6 @@ export default {
   watch: {
     'formParams.content': {
       handler: (val, oldVal) => {
-        
       },
       // 深度观察
       deep: true
@@ -200,8 +255,9 @@ export default {
       font-weight: 700
       font-size: $font-title
       text-align: center
+      margin-bottom: 25px
     .info-wrap
-      padding: 25px 0
+      margin-bottom: 25px
       color: $home-gray
       font-size: $font-small
       text-align: center

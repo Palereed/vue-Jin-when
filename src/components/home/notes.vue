@@ -7,96 +7,105 @@
       </li>
     </ul>
     <div class="article-wrap">
-      <article>
-        <a href="javascript:;" class="title">
-          关于跨域数据请求的一些絮叨
-        </a>
-        <p class="info-wrap">
-          <span>标签：Vue</span>
-          <span>时间：2018-09-03</span>
-          <span>作者：蒹葭</span>
-          <span>备注：原创</span>
-        </p>
-        <div class="watch">
-          <i class="icon-eye"></i>
-          <span>37</span>
-        </div>
-        <div class="content">
-          <h2>跨域数据请求</h2>
-          <p>最近在看huangyi老师的vue音乐播放器视频，其中的跨域数据请求因为视频距现在已经过去1年，qq音乐许多接口已经改变，因此在跨域过程中有许多坑需要解决，这里..</p>
-        </div>
-        <a href="javascript:;" class="whole-btn">展开全文</a>
-        <div class="ArclBttom">
-          <a href="" class="ArclShow"></a>
-        </div>
-      </article>
-      <article>
-        <a href="javascript:;" class="title">
-          关于跨域数据请求的一些絮叨
-        </a>
-        <p class="info-wrap">
-          <span>标签：Vue</span>
-          <span>时间：2018-09-03</span>
-          <span>作者：蒹葭</span>
-          <span>备注：原创</span>
-        </p>
-        <div class="watch">
-          <i class="icon-eye"></i>
-          <span>37</span>
-        </div>
-        <div class="content">
-          <h2>跨域数据请求</h2>
-          <p>最近在看huangyi老师的vue音乐播放器视频，其中的跨域数据请求因为视频距现在已经过去1年，qq音乐许多接口已经改变，因此在跨域过程中有许多坑需要解决，这里..</p>
-        </div>
-        <a href="javascript:;" class="whole-btn">展开全文</a>
-        <div class="ArclBttom">
-          <a href="" class="ArclShow"></a>
-        </div>
-      </article>
-      <article>
-        <a href="javascript:;" class="title">
-          关于跨域数据请求的一些絮叨
-        </a>
-        <p class="info-wrap">
-          <span>标签：Vue</span>
-          <span>时间：2018-09-03</span>
-          <span>作者：蒹葭</span>
-          <span>备注：原创</span>
-        </p>
-        <div class="watch">
-          <i class="icon-eye"></i>
-          <span>37</span>
-        </div>
-        <div class="content">
-          <h2>跨域数据请求</h2>
-          <p>最近在看huangyi老师的vue音乐播放器视频，其中的跨域数据请求因为视频距现在已经过去1年，qq音乐许多接口已经改变，因此在跨域过程中有许多坑需要解决，这里..</p>
-        </div>
-        <a href="javascript:;" class="whole-btn">展开全文</a>
-        <div class="ArclBttom">
-          <a href="" class="ArclShow"></a>
-        </div>
-      </article>
+      <!-- 文章加载 -->
+      <loading :data="notesList"></loading>
+      <!-- 文章列表 -->
+      <ul class="notes-list">
+        <li v-for="note in notesList" :key="note.id">
+          <a href="javascript:;" class="title">{{note.title}}</a>
+          <p class="info-wrap">
+            <span>标签：{{note.classifyVal}}</span>
+            <span>时间：{{formatTime(note.time,'yyyy-MM-dd')}}</span>
+            <span>作者：{{note.writer}}</span>
+            <span>备注：{{note.radio}}</span>
+          </p>
+          <div class="watch">
+            <i class="icon-eye"></i>
+            <span>{{note.watch}}</span>
+          </div>
+          <div class="content">
+            <h2>{{note.preface}}</h2>
+            <p>{{note.abstract}}</p>
+          </div>
+          <a href="javascript:;" class="whole-btn">展开全文</a>
+          <div class="ArclBttom">
+            <a href="" class="ArclShow"></a>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="pagination">
+    <div class="pagination" v-show="notesList.length">
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="12">
+        :page-size="pageLimit"
+        :total="totalNotes"
+        @current-change="pageChange"
+        @prev-click="pageChange"
+        @next-click="pageChange">
       </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import {classList, notesList} from 'api/api'
+import {formatDate} from 'common/js/util'
+import Loading from 'components/template/loading'
 export default {
   data () {
     return {
+      // 分类列表
+      navList: [],
+      // 文章列表
+      notesList: [],
+      // 总文章数
+      totalNotes: 0,
+      // 每页文章数
+      pageLimit: 0,
       // 分类索引
       navIndex: 0
     }
   },
   created () {
-    this.navList = ['全部', 'Css', 'js', 'vue', 'node', '其他']
+    this.getClassify()
+    this.getNotes()
+  },
+  methods: {
+    // 文章分类
+    getClassify () {
+      classList().then((res) => {
+        this.navList.push('全部')
+        // 无分类
+        if (!res.data.length) {
+          return
+        }
+        for (let i = 0; i < res.data.length; i++) {
+          this.navList.push(res.data[i].name)
+        }
+      })
+    },
+    // 文章列表
+    getNotes (num) {
+      // 保证no-data出现
+      this.notesList = []
+      notesList(num).then((res) => {
+        this.notesList = res.data.note
+        this.totalNotes = res.data.total
+        this.pageLimit = res.data.limit
+      })
+    },
+    // 翻页
+    pageChange (num) {
+      this.getNotes(num)
+    },
+    // 时间格式化
+    formatTime (time, formate) {
+      return formatDate(time, formate)
+    }
+  },
+  components: {
+    Loading
   }
 }
 </script>
@@ -143,61 +152,62 @@ export default {
             background: $home-thingray
     .article-wrap
       margin-top: 30px
-      article
-        padding-bottom: 30px
-        border-bottom: 1px solid $home-line
-        margin-bottom: 30px
-        position: relative
-        .title
-          font-weight: 700
-          font-size: $font-title
+      .notes-list
+        li
+          padding-bottom: 30px
+          border-bottom: 1px solid $home-line
+          margin-bottom: 30px
           position: relative
-          display: inline-block
-          &:before
-            position: absolute
-            width: 0
-            content: ""
-            height: 2px
-            bottom: -5px
-            left: 0
-            background: $home-font
-            transition: width 0.6s
-          &:hover
-            &:before
-              width: 100%
-        .info-wrap
-          padding: 15px 0 5px 0
-          color: $home-gray
-          font-size: $font-small
-          span
-            margin-right: 20px
-        .watch
-          position: absolute
-          top: 60px
-          right: 0
-          display: flex
-          flex-direction: column
-          width: 30px
-          align-items: center
-          i
-            font-size: $font-middle
-          span
-            margin-top: 5px
-            font-size: $font-default
-        .content
-          border-left: 3px solid $home-thingray
-          padding-left: 30px
-          margin: 10px 0 20px 0
-          line-height: 1.8
-          text-align: justify
-          letter-spacing: 1.5px
-          h2
-            font-size: $font-middle
+          .title
             font-weight: 700
-            margin: 10px 0
-        .whole-btn
-          padding: 10px 0 10px 33px
-          text-decoration: underline
+            font-size: $font-title
+            position: relative
+            display: inline-block
+            &:before
+              position: absolute
+              width: 0
+              content: ""
+              height: 2px
+              bottom: -5px
+              left: 0
+              background: $home-font
+              transition: width 0.6s
+            &:hover
+              &:before
+                width: 100%
+          .info-wrap
+            padding: 15px 0 5px 0
+            color: $home-gray
+            font-size: $font-small
+            span
+              margin-right: 20px
+          .watch
+            position: absolute
+            top: 60px
+            right: 0
+            display: flex
+            flex-direction: column
+            width: 30px
+            align-items: center
+            i
+              font-size: $font-middle
+            span
+              margin-top: 5px
+              font-size: $font-default
+          .content
+            border-left: 3px solid $home-thingray
+            padding-left: 30px
+            margin: 10px 0 20px 0
+            line-height: 1.8
+            text-align: justify
+            letter-spacing: 1.5px
+            h2
+              font-size: $font-middle
+              font-weight: 700
+              margin: 10px 0
+          .whole-btn
+            padding: 10px 0 10px 33px
+            text-decoration: underline
     .pagination
       margin-bottom: 20px
       font-size: $font-normal
@@ -227,39 +237,40 @@ export default {
             height: .52rem
       .article-wrap
         margin-top: .4rem
-        article
-          padding-bottom: .3rem
-          margin-bottom: .3rem
-          .title
-            font-size: $mobileFont-middle
-            &:before
-              display: none
-          .info-wrap
-            padding: .25rem 0 .15rem 0
-            span
-              font-size: $mobileFont-small
-              margin-right: .2rem
-          .watch
-            top: 1rem
-            width: .3rem
-            i
-              font-size: $mobileFont-just
-            span
-              margin-top: .05rem
-              font-size: $mobileFont-small
-          .content
-            border-left: .06rem solid $home-thingray
-            padding-left: .3rem
-            margin: .1rem 0 .2rem 0
-            line-height: $mobileFont-title
-            font-size: $mobileFont-normal
-            letter-spacing: .015rem
-            h2
-              font-size: $mobileFont-just
-              margin: .1rem 0 .1rem 0
-          .whole-btn
-            font-size: $mobileFont-normal
-            padding: .1rem 0 .1rem .36rem
+        .notes-list
+          li
+            padding-bottom: .3rem
+            margin-bottom: .3rem
+            .title
+              font-size: $mobileFont-middle
+              &:before
+                display: none
+            .info-wrap
+              padding: .25rem 0 .15rem 0
+              span
+                font-size: $mobileFont-small
+                margin-right: .2rem
+            .watch
+              top: 1rem
+              width: .3rem
+              i
+                font-size: $mobileFont-just
+              span
+                margin-top: .05rem
+                font-size: $mobileFont-small
+            .content
+              border-left: .06rem solid $home-thingray
+              padding-left: .3rem
+              margin: .1rem 0 .2rem 0
+              line-height: $mobileFont-title
+              font-size: $mobileFont-normal
+              letter-spacing: .015rem
+              h2
+                font-size: $mobileFont-just
+                margin: .1rem 0 .1rem 0
+            .whole-btn
+              font-size: $mobileFont-normal
+              padding: .1rem 0 .1rem .36rem
       .pagination
         margin-bottom: .2rem
         font-size: $mobileFont-normal

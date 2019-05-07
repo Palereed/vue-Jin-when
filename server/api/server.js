@@ -2,7 +2,9 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user') // 用户
 const Message = require('../models/message') // 留言
+const Classify = require('../models/classify') // 文章分类
 const Note = require('../models/note') // 文章
+const Record = require('../models/record') // 独白
 var ObjectID = require('mongodb').ObjectID
 // 返回对象
 let resData = {
@@ -179,11 +181,46 @@ router.post('/message/answer', (req, res, next) => {
   })
 })
 
+// 分类添加
+router.post('/notes/class', (req, res, next) => {
+  let name    = req.body.name
+  Classify.findOne({ 
+    name: name
+  }).then( data => {
+    // 账号被注册
+    if (data) {
+      resData.code = 1
+      resData.message = '该分类已存在'
+      res.send(resData)
+      return next()
+    }
+    // 未被注册
+    let classify = new Classify({
+      name: name
+    })
+    classify.save()
+    resData.code = 0
+    resData.message = '添加成功'
+    res.send(resData)
+    return next()
+  })
+})
+
+// 分类数据
+router.get('/notes/classList', (req, res, next) => {
+  Classify.find({ 
+  }).then( data => {
+    res.send(data)
+    return next()
+  })
+})
+
 // 文章发布
 router.post('/notes/edit', (req, res, next) => {
   let title    = req.body.title
   let classifyVal = req.body.classifyVal
   let content  = req.body.content
+  let preface = req.body.preface
   let abstract = req.body.abstract
   let writer   = req.body.writer
   let radio    = req.body.radio
@@ -192,6 +229,7 @@ router.post('/notes/edit', (req, res, next) => {
     title    : title,
     classifyVal : classifyVal,
     content  : content,
+    preface  : preface,
     abstract : abstract,
     writer   : writer,
     radio    : radio,
@@ -221,7 +259,7 @@ router.post('/notes/list', (req, res, next) => {
       "time": -1
     }).limit(limit).skip(skip).then((data) => {
       list.note = data
-      // 需要给前端留言数据总长度
+      // 需要给前端文章数据总长度
       list.total = count
       list.limit = limit
       res.send(list)
@@ -229,6 +267,35 @@ router.post('/notes/list', (req, res, next) => {
     }).catch((err) => {
       console.log("ERROR:" + err)
     })
+  })
+})
+
+// 独白发布
+router.post('/record/edit', (req, res, next) => {
+  let title   = req.body.title
+  let spirit  = req.body.spirit
+  let weather = req.body.weather
+  let content  = req.body.content
+  let record = new Record({
+    title   : title,
+    spirit  : spirit,
+    weather : weather,
+    content : content,
+    time    : new Date()
+  })
+  record.save()
+  resData.code = 0
+  resData.message = '发布成功'
+  res.send(resData)
+  return next()
+})
+
+// 独白列表
+router.get('/record/list', (req, res, next) => {
+  Record.find({
+  }).then( data => {
+    res.send(data)
+    return next()
   })
 })
 
