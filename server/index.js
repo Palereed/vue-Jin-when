@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const app = express()
 // 跨域请求的域名
-const REQUEST_URL = 'http://192.168.1.108:8080'
+const REQUEST_URL = 'http://192.168.1.103:8080'
 
 // bodyparser设置
 app.use(bodyParser.json())

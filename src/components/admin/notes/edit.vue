@@ -71,6 +71,7 @@
       <el-dialog
         class="article"
         :visible.sync="dialogVisible"
+        width="920px"
         center>
         <h2 class="title">{{formParams.title}}</h2>
         <p class="info-wrap">

@@ -87,7 +87,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
   .writer-wrap
-    height: calc(100vh - 64px)
+    height: calc(100vh - 60px)
     .avatar-wrap
       display: flex
       justify-content: center

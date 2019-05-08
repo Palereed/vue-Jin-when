@@ -6,7 +6,9 @@
       <i class="icon-quote-right"></i>
     </div>
     <div class="time-wrap">
-      <ul class="time-line" v-for="travel in travels" :key="travel.id">
+      <!-- 珍藏加载 -->
+      <loading :data="travelsArr"></loading>
+      <ul class="time-line" v-for="travel in travelsList" :key="travel.id">
         <li class="tl-header">
           {{travel.month}}
         </li>
@@ -15,13 +17,13 @@
             <div class="tl-wrap">
               <span class="tl-data">{{item.day}}</span>
               <p class="tl-content">
-                <a :href="item.href" class="tl-link">{{item.content}}</a>
+                <a :href="item.link" class="tl-link">{{item.content}}</a>
               </p>
             </div>
           </li>
         </ul>
       </ul>
-      <ul class="time-line">
+      <ul class="time-line" v-show="travelsArr.length">
         <li class="tl-header">
           <h2>开始</h2>
         </li>
@@ -31,70 +33,46 @@
 </template>
 
 <script>
+import {travelsList} from 'api/api'
+import Loading from 'components/template/loading'
 export default {
   data () {
     return {
       title: '前端之路如打擂，当撼大摧坚，徐徐图之，久久见功。',
-      travels: [],
-      travelList: [{
-        date: 'Mon Sep 21 2017 14:05:30 GMT+0800',
-        href: 'https://www.moerats.com/',
-        content: '一个好点子'
-      },
-      {
-        date: 'Mon Sep 21 2019 14:05:30 GMT+0800',
-        href: 'https://www.moerats.com/',
-        content: '一个小demo'
-      },
-      {
-        date: 'Mon Sep 21 2018 14:05:30 GMT+0800',
-        href: 'https://www.moerats.com/',
-        content: '一个好点子'
-      },
-      {
-        date: 'Mon Jan 21 2019 14:05:30 GMT+0800',
-        href: 'https://www.moerats.com/',
-        content: '一个好点子'
-      },
-      {
-        date: 'Mon Jan 20 2019 14:05:30 GMT+0800',
-        href: 'https://github.com/Palereed',
-        content: '一些好玩的'
-      },
-      {
-        date: 'Mon Jan 21 2018 14:05:30 GMT+0800',
-        href: 'https://www.swiper.com.cn/',
-        content: '一些小探索'
-      }]
+      travelsList: {},
+      // travelsList为对象，没有length，需要声明一个数组传给loading组件
+      travelsArr: []
     }
   },
-  mounted () {
-    this.travels = this.formatList()
+  created () {
+    this.getTravel()
   },
   methods: {
-    formatList: function () {
-      let travels = {}
-      this.travelList.forEach(item => {
-        let month = this.dateFormat(item.date).match(/\d+年\d+月/g)[0]
-        let day = this.dateFormat(item.date).match(/\d+日/g)[0]
-        if (!travels[month]) {
-          travels[month] = {
-            month: month,
-            items: []
+    getTravel () {
+      travelsList().then((res) => {
+        let travels = {}
+        res.data.forEach(item => {
+          let month = this.dateFormat(item.time).match(/\d+年\d+月/g)[0]
+          let day = this.dateFormat(item.time).match(/\d+日/g)[0]
+          if (!travels[month]) {
+            travels[month] = {
+              month: month,
+              items: []
+            }
           }
-        }
-        travels[month].items.push(
-          {
-            day: day,
-            href: item.href,
-            content: item.content
-          }
-        )
+          travels[month].items.push(
+            {
+              day: day,
+              link: item.link,
+              content: item.content
+            }
+          )
+        })
+        this.travelsList = this.sortObj(travels)
+        this.travelsArr = Object.keys(this.travelsList)
       })
-      travels = this.sortObj(travels)
-      return travels
     },
-    sortObj: function (obj) {
+    sortObj (obj) {
       let arr = []
       for (let i in obj) {
         arr.push([i, obj[i]])
@@ -110,7 +88,7 @@ export default {
       }
       return newObj
     },
-    dateFormat: function (e) {
+    dateFormat (e) {
       let date = new Date(e)
       let Y = date.getFullYear() + '年'
       let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月'
@@ -118,6 +96,9 @@ export default {
       date = Y + M + D
       return date
     }
+  },
+  components: {
+    Loading
   }
 }
 </script>
@@ -125,7 +106,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
   .travel-wrap
-    margin-bottom: 20px
     .time-wrap
       margin-top: 30px
       margin-bottom: 10px
@@ -225,7 +205,7 @@ export default {
                   margin-left: -1rem
                   font-size: $mobileFont-small
                 .tl-content
-                  max-width: 700px
+                  max-width: 5.1rem
                   padding: .2rem
                   border-radius: .15rem
                   position: relative

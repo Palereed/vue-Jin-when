@@ -15,12 +15,12 @@ export default {
   .no-data
     text-align: center
     font-size: $font-title
-    height: calc(100vh - 194px)
+    height: calc(100vh - 242px)
     i
       position: relative
       top: 40%
   .mobile
     .no-data
       font-size: $mobileFont-title
-      height: calc(100vh - 2.7rem)
+      height: calc(100vh - 3.64rem)
 </style>

@@ -241,6 +241,7 @@ export default {
         padding: 20px
         font-size: $font-default
         justify-content: space-between
+        line-height: 20px
         a,span
           display: inline-block
   .mobile

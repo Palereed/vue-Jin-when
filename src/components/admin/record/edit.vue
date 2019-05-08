@@ -56,7 +56,7 @@ export default {
           { required: true, message: '请输入标题', trigger: 'blur' }
         ],
         spirit: [
-          { required: true, message: '请选择心情', trigger: 'change' }
+          { required: true, message: '请输入心情', trigger: 'blur' }
         ],
         weather: [
           { required: true, message: '请输入天气', trigger: 'blur' }

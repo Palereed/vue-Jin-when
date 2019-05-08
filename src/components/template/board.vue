@@ -87,7 +87,7 @@ const AVATAR_LIST = [
 export default {
   data () {
     // leaveForm
-    var checkUserLeave = (rule, value, callback) => {
+    let checkUserLeave = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('留言不能为空'))
       } else {
@@ -95,14 +95,14 @@ export default {
       }
     }
     // loginForm
-    var checkLoginName = (rule, value, callback) => {
+    let checkLoginName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('账号不能为空'))
       } else {
         callback()
       }
     }
-    var checkLoginPass = (rule, value, callback) => {
+    let checkLoginPass = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('密码不能为空'))
       } else {
@@ -110,7 +110,7 @@ export default {
       }
     }
     // registerForm
-    var checkRegisterName = (rule, value, callback) => {
+    let checkRegisterName = (rule, value, callback) => {
       let reg = new RegExp(/^[0-9a-zA-Z_]{1,}$/)
       if (!value) {
         return callback(new Error('账号不能为空'))
@@ -124,7 +124,7 @@ export default {
         }
       }
     }
-    var checkRegisterNick = (rule, value, callback) => {
+    let checkRegisterNick = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('昵称不能为空'))
       } else {
@@ -135,7 +135,7 @@ export default {
         }
       }
     }
-    var checkRegisterPass = (rule, value, callback) => {
+    let checkRegisterPass = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('密码不能为空'))
       } else {
@@ -146,7 +146,7 @@ export default {
         }
       }
     }
-    var checkRegisterPassAgain = (rule, value, callback) => {
+    let checkRegisterPassAgain = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('请再次输入密码'))
       } else {
@@ -157,7 +157,7 @@ export default {
         }
       }
     }
-    var checkRegisterSafe = (rule, value, callback) => {
+    let checkRegisterSafe = (rule, value, callback) => {
       let reg = new RegExp(/^[0-9]*$/)
       if (!value) {
         return callback(new Error('请输入密保'))

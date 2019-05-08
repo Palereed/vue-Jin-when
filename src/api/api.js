@@ -93,6 +93,21 @@ export function notesList (num) {
   })
 }
 
+// 文章筛选
+export function notesSwitch (num, classify) {
+  return axios.post('/notes/switch', {
+    page: num,
+    classify: classify
+  })
+}
+
+// 文章详情
+export function noteDetail (id) {
+  return axios.post('/notes/detail', {
+    noteid: id
+  })
+}
+
 // 独白发布
 export function recordsEdit (params) {
   return axios.post('/record/edit', {
@@ -106,4 +121,18 @@ export function recordsEdit (params) {
 // 独白列表
 export function recordsList () {
   return axios.get('/record/list')
+}
+
+// 珍藏发布
+export function travelsEdit (params) {
+  return axios.post('/travel/edit', {
+    title: params.title,
+    link: params.link,
+    content: params.content
+  })
+}
+
+// 珍藏列表
+export function travelsList () {
+  return axios.get('/travel/list')
 }

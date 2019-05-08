@@ -1,7 +1,7 @@
 <template>
   <div class="notes-wrap">
     <ul class="topnav">
-      <li v-for="(item,index) in navList" :key="item.id" :class="{'active': index === navIndex}">
+      <li v-for="(item,index) in navList" :key="item.id" :class="{'active': index === navIndex}" @click="switchClassify(1, item, index)">
         <span>{{item}}</span>
         <span>{{item}}</span>
       </li>
@@ -12,7 +12,7 @@
       <!-- 文章列表 -->
       <ul class="notes-list">
         <li v-for="note in notesList" :key="note.id">
-          <a href="javascript:;" class="title">{{note.title}}</a>
+          <a href="javascript:;" class="title" @click="linkDetail(note._id)">{{note.title}}</a>
           <p class="info-wrap">
             <span>标签：{{note.classifyVal}}</span>
             <span>时间：{{formatTime(note.time,'yyyy-MM-dd')}}</span>
@@ -34,22 +34,24 @@
         </li>
       </ul>
     </div>
-    <div class="pagination" v-show="notesList.length">
+    <div class="pagination">
       <el-pagination
         background
         layout="prev, pager, next"
         :page-size="pageLimit"
         :total="totalNotes"
+        :current-page.sync="resetPage"
         @current-change="pageChange"
         @prev-click="pageChange"
         @next-click="pageChange">
       </el-pagination>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import {classList, notesList} from 'api/api'
+import {classList, notesList, notesSwitch} from 'api/api'
 import {formatDate} from 'common/js/util'
 import Loading from 'components/template/loading'
 export default {
@@ -64,7 +66,11 @@ export default {
       // 每页文章数
       pageLimit: 0,
       // 分类索引
-      navIndex: 0
+      navIndex: 0,
+      // 当前选择分类
+      classify: '',
+      // 页码重置
+      resetPage: 0
     }
   },
   created () {
@@ -87,6 +93,7 @@ export default {
     },
     // 文章列表
     getNotes (num) {
+      this.resetPage = num
       // 保证no-data出现
       this.notesList = []
       notesList(num).then((res) => {
@@ -97,7 +104,36 @@ export default {
     },
     // 翻页
     pageChange (num) {
-      this.getNotes(num)
+      if (this.classify && this.classify !== '全部') {
+        this.switchClassify(num, this.classify, this.navIndex)
+      } else {
+        this.getNotes(num)
+      }
+    },
+    // 分类筛选
+    switchClassify (num, classify, index) {
+      this.resetPage = num
+      this.notesList = []
+      this.navIndex = index
+      this.classify = classify
+      if (this.classify !== '全部') {
+        notesSwitch(num, this.classify).then((res) => {
+          this.notesList = res.data.note
+          this.totalNotes = res.data.total
+          this.pageLimit = res.data.limit
+        })
+      } else {
+        this.getNotes()
+      }
+    },
+    // 文章页
+    linkDetail (id) {
+      this.$router.push({
+        name: 'detail',
+        params: {
+          id: id
+        }
+      })
     },
     // 时间格式化
     formatTime (time, formate) {
@@ -152,6 +188,7 @@ export default {
             background: $home-thingray
     .article-wrap
       margin-top: 30px
+      min-height: calc(100vh - 272px)
       .notes-list
         li
           padding-bottom: 30px
@@ -237,6 +274,7 @@ export default {
             height: .52rem
       .article-wrap
         margin-top: .4rem
+        min-height: calc(100vh - 3.94rem)
         .notes-list
           li
             padding-bottom: .3rem

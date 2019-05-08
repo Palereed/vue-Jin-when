@@ -247,6 +247,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
   .message-wrap
+    min-height: calc(100vh - 80px)
     .topdesc
       width: $main-width
       height: 100px
@@ -332,6 +333,7 @@ export default {
       justify-content: center
   .mobile
     .message-wrap
+      min-height: calc(100vh - 1.1rem)
       .topdesc
         width: 100%
         height: 1.6rem
