@@ -5,7 +5,7 @@
       <span class="desc">{{desc}}</span>
     </div>
     <div class="form-wrap">
-      <el-form label-width="60px" label-position="left" class="login-form" :model="loginForm" :rules="rulesLogin">
+      <el-form label-width="60px" ref="login" label-position="left" class="login-form" :model="loginForm" :rules="rulesLogin">
         <el-form-item label="账号：" prop="username">
           <el-input v-model="loginForm.username"></el-input>
         </el-form-item>
@@ -13,7 +13,7 @@
           <el-input v-model="loginForm.userpass" type="password"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button size="medium" plain>喵管理</el-button>
+          <el-button size="medium" plain @click="login">喵管理</el-button>
           <el-button size="medium" plain @click="returnHome">返回锦时</el-button>
         </el-form-item>
       </el-form>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import {saveSession} from 'common/js/util'
+import {adminLogin} from 'api/api'
 export default {
   data () {
     // loginForm
@@ -56,7 +58,36 @@ export default {
       }
     }
   },
+  created () {
+    if (/mobile/.test(document.documentElement.className)) {
+      this.$router.push('/error')
+    }
+  },
   methods: {
+    login () {
+      this.$refs['login'].validate((valid) => {
+        if (valid) {
+          adminLogin(this.loginForm).then((res) => {
+            if (res.data.code === 0) {
+              // 登录成功
+              this.$message({
+                message: res.data.message,
+                type: 'success'
+              })
+              saveSession('adminSecret', res.data.info)
+              // 登录表单重置
+              this.$refs['login'].resetFields()
+              // 进入后台管理
+              this.$router.push('/admin/data')
+            } else {
+              this.$message.error(res.data.message)
+            }
+          })
+        } else {
+          this.$message.error('请填写必填字段')
+        }
+      })
+    },
     returnHome () {
       this.$router.push('/home/notes')
     }

@@ -26,15 +26,7 @@ export default new Router({
           // 前端那些事（文章页）
           path: '/home/notes',
           meta: { title: '前端那些事', keepAlive: false },
-          component: resolve => require(['components/home/notes'], resolve),
-          children: [
-            {
-              // 文章详情页
-              path: '/home/notes/detail/:id',
-              name: 'detail',
-              component: resolve => require(['components/home/detail'], resolve)
-            }
-          ]
+          component: resolve => require(['components/home/notes'], resolve)
         },
         {
           // 喵之物语篇（独白页）
@@ -61,6 +53,12 @@ export default new Router({
           component: resolve => require(['components/home/writer'], resolve)
         }
       ]
+    },
+    {
+      // 文章详情页
+      path: '/notes/detail/:id',
+      name: 'detail',
+      component: resolve => require(['components/home/detail'], resolve)
     },
     {
       // 后台登录

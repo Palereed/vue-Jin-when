@@ -182,6 +182,36 @@ router.post('/message/answer', (req, res, next) => {
   })
 })
 
+// 管理员登陆
+router.post('/admin/login', (req, res, next) => {
+  let userName = req.body.username
+  let userPass = req.body.userpass
+  User.findOne({ 
+    username: userName,
+    userpass: userPass,
+    isAdmin: true,
+  }).then((data) => {
+    if (data) {
+      resData.code = 0
+      resData.message = '登录成功'
+      // 用户信息
+      resData.info = {
+        "id": data.id,
+        "nickname": data.nickname,
+        "avatar": data.avatar
+      }
+      res.send(resData)
+      return next()
+    }
+    resData.code = 1
+    resData.message = '账号或密码错误'
+    res.send(resData)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
 // 分类添加
 router.post('/notes/class', (req, res, next) => {
   let name    = req.body.name
@@ -248,7 +278,7 @@ router.post('/notes/edit', (req, res, next) => {
 router.post('/notes/list', (req, res, next) => {
   // 读取数据条数 limit(Number)，默认展示第一页
   let page = req.body.page || 1
-  let limit = 8
+  let limit = 6
   let list = {}
   let classify = req.body.classify
   // 数据库中数据条数
@@ -276,7 +306,7 @@ router.post('/notes/list', (req, res, next) => {
 router.post('/notes/switch', (req, res, next) => {
   // 读取数据条数 limit(Number)，默认展示第一页
   let page = req.body.page || 1
-  let limit = 8
+  let limit = 6
   let list = {}
   let classify = req.body.classify
   // 数据库中数据条数

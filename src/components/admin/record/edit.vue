@@ -27,7 +27,6 @@
             v-model="formParams.content">
           </tinymce>
         </el-form-item>
-        <span class="textarea-info">22 / 150</span>
         <el-form-item>
           <el-button plain @click="publish">发 布</el-button>
         </el-form-item>

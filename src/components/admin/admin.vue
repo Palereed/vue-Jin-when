@@ -20,7 +20,8 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
         <div class="manager-wrap">
-          <img src="/static/images/owner.jpg">
+          <span>{{nickName}}</span>
+          <img :src="adminAvatar">
         </div>
       </div>
       <div class="main-content">
@@ -35,15 +36,25 @@
 <script>
 import navMenu from 'components/admin/menu'
 import {navList} from './nav'
+import {getSession} from 'common/js/util'
 export default {
   data () {
     return {
       title: '锦时喵管家',
-      crumbList: {}
+      crumbList: {},
+      adminAvatar: '',
+      nickName: ''
     }
   },
   created () {
     this.navList = navList
+    // 管理员信息
+    let info = getSession('adminSecret')
+    if (!info.avatar) {
+      this.$router.push('/admin/login')
+    }
+    this.adminAvatar = info.avatar
+    this.nickName = info.nickname
   },
   mounted () {
     this.getBreadcrumb()
@@ -136,13 +147,14 @@ export default {
       padding: 0 30px
       box-sizing: border-box
       .manager-wrap
-        width: 50px
-        height: 50px
-        border-radius: 50%
-        overflow: hidden
+        display: flex
+        align-items: center
+        span
+          margin-right: 10px
         img
-          width: 100%
-          height: 100%
+          width: 50px
+          height: 50px
+          border-radius: 50%
       .breadCrumb
         .el-breadcrumb__inner a, .el-breadcrumb__inner
           color: $admin-font

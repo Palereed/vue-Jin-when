@@ -10,7 +10,7 @@ module.exports = new Schema({
   radio       : String,  // 原创or转载
   link        : String,  // 转载信息
   time        : Date,    // 发布时间
-  watch       : {        // 是否为管理员
+  watch       : {        // 浏览量
     type: Number,
     default: 0
   }

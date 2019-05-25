@@ -4,7 +4,7 @@
       <h2 class="title">{{noteData.title}}</h2>
       <p class="info-wrap">
         <span>标签：{{noteData.classifyVal}}</span>
-        <span>时间：{{formatTime(noteData.time, 'yyyy-MM-dd hh:mm')}}</span>
+        <span>时间：{{formatTime(noteData.time, 'yyyy-MM-dd')}}</span>
         <span>作者：{{noteData.writer}}</span>
         <span>备注：{{noteData.radio}}</span>
       </p>
@@ -23,6 +23,7 @@ export default {
     }
   },
   created () {
+    document.body.scrollTop = 0
     this.getDetail()
   },
   methods: {
@@ -42,14 +43,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
   .detail-page
-    position: fixed
-    width: 100%
-    height: 100%
-    top: 0
-    left: 0
-    z-index: 100
-    background: #fff
-    overflow-y: scroll
     .detail-wrap
       width: $main-width
       margin: auto
@@ -57,11 +50,24 @@ export default {
         font-weight: 700
         font-size: $font-title
         text-align: center
-        margin: 25px
+        margin: 50px 0 30px 0
       .info-wrap
         color: $home-gray
         font-size: $font-small
         text-align: center
         span
-          margin-right: 20px 
+          margin-right: 20px
+  .mobile
+    .detail-page
+      .detail-wrap
+        width: $mobileMain-width
+        box-sizing: border-box
+        padding: 0 .2rem
+        .title
+          font-size: $font-title
+          margin: .5rem 0 .3rem 0
+        .info-wrap
+          font-size: $mobileFont-normal
+          span
+            margin-right: .2rem
 </style>

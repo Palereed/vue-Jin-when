@@ -27,7 +27,7 @@
             <h2>{{note.preface}}</h2>
             <p>{{note.abstract}}</p>
           </div>
-          <a href="javascript:;" class="whole-btn">展开全文</a>
+          <a href="javascript:;" class="whole-btn" @click="linkDetail(note._id)">展开全文</a>
           <div class="ArclBttom">
             <a href="" class="ArclShow"></a>
           </div>
@@ -46,7 +46,6 @@
         @next-click="pageChange">
       </el-pagination>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 

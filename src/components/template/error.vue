@@ -52,4 +52,23 @@ export default {
           border-right: 4px solid $home-font
           right: 0px
           bottom: 0px
+  .mobile
+    .error-wrap
+      .title
+        margin-bottom: 1.2rem
+        .name
+          font-size: $mobileFont-jinwhen
+          height: 1.2rem
+          line-height: 1.2rem
+          margin-bottom: .3rem
+          padding: 0 .6rem
+          &:before,&:after
+            width: .5rem
+            height: .5rem
+          &:before
+            border-top: .06rem solid $home-font
+            border-left: .06rem solid $home-font
+          &:after
+            border-bottom: .06rem solid $home-font
+            border-right: .06rem solid $home-font
 </style>

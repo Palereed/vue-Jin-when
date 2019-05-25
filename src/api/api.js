@@ -60,6 +60,14 @@ export function userAnswer (params) {
   })
 }
 
+// 管理员登陆
+export function adminLogin (params) {
+  return axios.post('/admin/login', {
+    username: params.username,
+    userpass: params.userpass
+  })
+}
+
 // 分类添加
 export function classAdd (name) {
   return axios.post('/notes/class', {
