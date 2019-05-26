@@ -9,6 +9,6 @@ module.exports = new Schema({
   time      : Date,    // 注册时间
   isAdmin   : {        // 是否为管理员
     type: Boolean,
-    default: true
+    default: false
   }
 })

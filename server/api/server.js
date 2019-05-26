@@ -395,9 +395,323 @@ router.post('/travel/edit', (req, res, next) => {
 // 珍藏列表
 router.get('/travel/list', (req, res, next) => {
   Travel.find({
-  }).then( data => {
+  }).then((data) => {
     res.send(data)
     return next()
+  })
+})
+
+// 用户管理列表
+router.post('/admin/user/list', (req, res, next) => {
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  User.count({
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    User.find({
+    }).sort({
+      "leavetime": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.user = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 用户管理查询
+router.post('/admin/user/search', (req, res, next) => {
+  let keyWord = req.body.keyword
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  User.count({
+    $or: [
+      { username: {$regex: keyWord} },
+      { nickname: {$regex: keyWord} }, 
+    ]
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    User.find({
+      $or: [
+        { username: {$regex: keyWord} },
+        { nickname: {$regex: keyWord} }, 
+      ]
+    }).sort({
+      "leavetime": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.user = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 用户管理删除
+router.post('/admin/user/delete', (req, res, next) => {
+  let userId = ObjectID(req.body.userid)
+  User.remove({
+    _id: userId
+  }).then(() => {
+    resData.code = 0
+    resData.message = '删除成功'
+    res.send(resData)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 用户管理信息修改用户id
+router.post('/admin/user/which', (req, res, next) => {
+  let userId = ObjectID(req.body.userid)
+  User.find({
+    _id: userId
+  }).then((data) => {
+    res.send(data)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 用户管理信息修改保存
+router.post('/admin/user/edit', (req, res, next) => {
+  let userName = req.body.username
+  let userPass = req.body.userpass
+  let nickName = req.body.nickname
+  let avatar   = req.body.avatar
+  let safePass = req.body.safepass
+  User.update({
+    username: userName 
+  },{
+    $set: {
+      userpass : userPass,
+      nickname : nickName,
+      avatar   : avatar,
+      safepass : safePass
+    }
+  }).then(() => {
+    Message.update({
+      username: userName 
+    },{
+      $set: {
+        nickname : nickName,
+        avatar   : avatar,
+      }
+    },{
+      multi: true,
+      upsert: false
+    }).then(() => {
+      resData.code = 0
+      resData.message = '修改成功'
+      res.send(resData)
+      return next()
+    })
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 珍藏管理列表
+router.post('/admin/travel/list', (req, res, next) => {
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  Travel.count({
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    Travel.find({
+    }).sort({
+      "leavetime": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.travel = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 珍藏管理查询
+router.post('/admin/travel/search', (req, res, next) => {
+  let keyWord = req.body.keyword
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  Travel.count({
+    $or: [
+      { title: {$regex: keyWord, $options:"i"} },
+      { content: {$regex: keyWord, $options:"i"} }, 
+    ]
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    Travel.find({
+      $or: [
+        { title: {$regex: keyWord, $options:"i"} },
+        { content: {$regex: keyWord, $options:"i"} }, 
+      ]
+    }).sort({
+      "leavetime": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.travel = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 珍藏管理删除
+router.post('/admin/travel/delete', (req, res, next) => {
+  let travelId = ObjectID(req.body.travelid)
+  Travel.remove({
+    _id: travelId
+  }).then(() => {
+    resData.code = 0
+    resData.message = '删除成功'
+    res.send(resData)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 珍藏管理信息修改珍藏id
+router.post('/admin/travel/which', (req, res, next) => {
+  let travelId = ObjectID(req.body.travelid)
+  Travel.find({
+    _id: travelId
+  }).then((data) => {
+    res.send(data)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 珍藏管理信息修改保存
+// router.post('/admin/travel/edit', (req, res, next) => {
+//   let userName = req.body.username
+//   let userPass = req.body.userpass
+//   let nickName = req.body.nickname
+//   let avatar   = req.body.avatar
+//   let safePass = req.body.safepass
+//   User.update({
+//     username: userName 
+//   },{
+//     $set: {
+//       userpass : userPass,
+//       nickname : nickName,
+//       avatar   : avatar,
+//       safepass : safePass
+//     }
+//   }).then(() => {
+//     Message.update({
+//       username: userName 
+//     },{
+//       $set: {
+//         nickname : nickName,
+//         avatar   : avatar,
+//       }
+//     },{
+//       multi: true,
+//       upsert: false
+//     }).then(() => {
+//       resData.code = 0
+//       resData.message = '修改成功'
+//       res.send(resData)
+//       return next()
+//     })
+//   }).catch((err) => {
+//     console.log("ERROR:" + err)
+//   })
+// })
+
+// 留言管理列表
+router.post('/admin/message/list', (req, res, next) => {
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  Message.count({
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    Message.find({
+    }).sort({
+      "leavetime": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.message = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 留言管理查询
+router.post('/admin/message/search', (req, res, next) => {
+  let keyWord = req.body.keyword
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  Message.count({
+    $or: [
+      { username: {$regex: keyWord} },
+      { nickname: {$regex: keyWord} }, 
+      { content:  {$regex: keyWord} } 
+    ]
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    Message.find({
+      $or: [
+        { username: {$regex: keyWord} },
+        { nickname: {$regex: keyWord} }, 
+        { content:  {$regex: keyWord} } 
+      ]
+    }).sort({
+      "leavetime": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.message = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 留言管理删除
+router.post('/admin/message/delete', (req, res, next) => {
+  let messageId = ObjectID(req.body.messageid)
+  Message.remove({
+    _id: messageId
+  }).then(() => {
+    resData.code = 0
+    resData.message = '删除成功'
+    res.send(resData)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
   })
 })
 

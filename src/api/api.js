@@ -144,3 +144,101 @@ export function travelsEdit (params) {
 export function travelsList () {
   return axios.get('/travel/list')
 }
+
+// 用户管理列表
+export function adminUser (num) {
+  return axios.post('/admin/user/list', {
+    page: num
+  })
+}
+
+// 用户管理查询
+export function userSearch (params, num) {
+  return axios.post('/admin/user/search', {
+    keyword: params,
+    page: num
+  })
+}
+
+// 用户管理删除
+export function userDelete (id) {
+  return axios.post('/admin/user/delete', {
+    userid: id
+  })
+}
+
+// 用户管理信息修改用户id
+export function userEditId (id) {
+  return axios.post('/admin/user/which', {
+    userid: id
+  })
+}
+
+// 用户管理信息修改保存
+export function userEdit (params) {
+  return axios.post('/admin/user/edit', {
+    username: params.username,
+    userpass: params.userpass,
+    nickname: params.nickname,
+    avatar: params.avatar,
+    safepass: params.safepass
+  })
+}
+
+// 珍藏管理列表
+export function adminTravel (num) {
+  return axios.post('/admin/travel/list', {
+    page: num
+  })
+}
+
+// 珍藏管理查询
+export function travelSearch (params, num) {
+  return axios.post('/admin/travel/search', {
+    keyword: params,
+    page: num
+  })
+}
+
+// 珍藏管理删除
+export function travelDelete (id) {
+  return axios.post('/admin/travel/delete', {
+    travelid: id
+  })
+}
+
+// 珍藏管理信息修改珍藏id
+export function travelEditId (id) {
+  return axios.post('/admin/travel/which', {
+    travelid: id
+  })
+}
+
+// 珍藏管理信息修改保存
+export function travelEdit (params) {
+  return axios.post('/admin/travel/edit', {
+    
+  })
+}
+
+// 留言管理列表
+export function adminMessage (num) {
+  return axios.post('/admin/message/list', {
+    page: num
+  })
+}
+
+// 留言管理查询
+export function messageSearch (params, num) {
+  return axios.post('/admin/message/search', {
+    keyword: params,
+    page: num
+  })
+}
+
+// 留言管理删除
+export function messageDelete (id) {
+  return axios.post('/admin/message/delete', {
+    messageid: id
+  })
+}
