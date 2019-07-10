@@ -185,6 +185,91 @@ export function userEdit (params) {
   })
 }
 
+// 文章管理列表
+export function adminNote (num) {
+  return axios.post('/admin/note/list', {
+    page: num
+  })
+}
+
+// 文章管理查询
+export function noteSearch (params, classifyVal, num) {
+  return axios.post('/admin/note/search', {
+    keyword: params,
+    classify: classifyVal,
+    page: num
+  })
+}
+
+// 文章管理删除
+export function noteDelete (id) {
+  return axios.post('/admin/note/delete', {
+    noteid: id
+  })
+}
+
+// 文章管理信息修改文章id
+export function noteEditId (id) {
+  return axios.post('/admin/note/which', {
+    noteid: id
+  })
+}
+
+// 文章管理信息修改保存
+export function noteEdit (params) {
+  return axios.post('/admin/note/edit', {
+    noteid: params.id,
+    title: params.title,
+    classifyVal: params.classifyVal,
+    content: params.content,
+    preface: params.preface,
+    abstract: params.abstract,
+    writer: params.writer,
+    radio: params.radio,
+    link: params.link
+  })
+}
+
+// 独白管理列表
+export function adminRecord (num) {
+  return axios.post('/admin/record/list', {
+    page: num
+  })
+}
+
+// 独白管理查询
+export function recordSearch (params, num) {
+  return axios.post('/admin/record/search', {
+    keyword: params,
+    page: num
+  })
+}
+
+// 独白管理删除
+export function recordDelete (id) {
+  return axios.post('/admin/record/delete', {
+    recordid: id
+  })
+}
+
+// 独白管理信息修改独白id
+export function recordEditId (id) {
+  return axios.post('/admin/record/which', {
+    recordid: id
+  })
+}
+
+// 独白管理信息修改保存
+export function recordEdit (params) {
+  return axios.post('/admin/record/edit', {
+    recordid: params.id,
+    title: params.title,
+    spirit: params.spirit,
+    weather: params.weather,
+    content: params.content
+  })
+}
+
 // 珍藏管理列表
 export function adminTravel (num) {
   return axios.post('/admin/travel/list', {
@@ -217,7 +302,10 @@ export function travelEditId (id) {
 // 珍藏管理信息修改保存
 export function travelEdit (params) {
   return axios.post('/admin/travel/edit', {
-    
+    travelid: params.id,
+    title: params.title,
+    link: params.link,
+    content: params.content
   })
 }
 

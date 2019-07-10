@@ -335,9 +335,11 @@ router.post('/notes/switch', (req, res, next) => {
 // 文章详情
 router.post('/notes/detail', (req, res, next) => {
   let noteId = ObjectID(req.body.noteid)
-  Note.find({
+  Note.findOne({
     _id: noteId
   }).then((data) => {
+    data.watch++
+    data.save()
     res.send(data)
     return next()
   }).catch((err) => {
@@ -522,6 +524,239 @@ router.post('/admin/user/edit', (req, res, next) => {
   })
 })
 
+// 文章管理列表
+router.post('/admin/note/list', (req, res, next) => {
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  Note.count({
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    Note.find({
+    }).sort({
+      "time": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.note = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 文章管理查询
+router.post('/admin/note/search', (req, res, next) => {
+  let keyWord = req.body.keyword
+  let classify = req.body.classify
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  Note.count({
+    classifyVal: classify,
+    $or: [
+      { title: {$regex: keyWord, $options:"i"} },
+      { abstract: {$regex: keyWord, $options:"i"} }
+    ]
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    Note.find({
+      classifyVal: classify,
+      $or: [
+        { title: {$regex: keyWord, $options:"i"} },
+        { abstract: {$regex: keyWord, $options:"i"} }
+      ]
+    }).sort({
+      "time": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.note = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 文章管理删除
+router.post('/admin/note/delete', (req, res, next) => {
+  let noteId = ObjectID(req.body.noteid)
+  Note.remove({
+    _id: noteId
+  }).then(() => {
+    resData.code = 0
+    resData.message = '删除成功'
+    res.send(resData)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 文章管理信息修改文章id
+router.post('/admin/note/which', (req, res, next) => {
+  let noteId = ObjectID(req.body.noteid)
+  Note.find({
+    _id: noteId
+  }).then((data) => {
+    res.send(data)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 文章管理信息修改保存
+router.post('/admin/note/edit', (req, res, next) => {
+  let noteId = ObjectID(req.body.noteid)
+  let title = req.body.title
+  let classifyVal = req.body.classifyVal
+  let content = req.body.content
+  let preface = req.body.preface
+  let abstract = req.body.abstract
+  let writer = req.body.writer
+  let radio = req.body. radio
+  let link = req.body.link
+  Note.update({
+    _id: noteId
+  },{
+    $set: {
+      title : title,
+      classifyVal : classifyVal,
+      content : content,
+      preface : preface,
+      abstract : abstract,
+      writer : writer,
+      radio : radio,
+      link : link
+    }
+  }).then(() => {
+    resData.code = 0
+    resData.message = '修改成功'
+    res.send(resData)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 独白管理列表
+router.post('/admin/record/list', (req, res, next) => {
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  Record.count({
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    Record.find({
+    }).sort({
+      "time": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.record = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 独白管理查询
+router.post('/admin/record/search', (req, res, next) => {
+  let keyWord = req.body.keyword
+  let page = req.body.page || 1
+  let limit = 12
+  let list = {}
+  Record.count({
+    $or: [
+      { title: {$regex: keyWord, $options:"i"} },
+      { spirit: {$regex: keyWord, $options:"i"} },
+      { weather: {$regex: keyWord, $options:"i"} },
+      { content: {$regex: keyWord, $options:"i"} },
+    ]
+  }).then((count) => {
+    let skip = (page - 1) * limit
+    Record.find({
+      $or: [
+        { title: {$regex: keyWord, $options:"i"} },
+        { spirit: {$regex: keyWord, $options:"i"} },
+        { weather: {$regex: keyWord, $options:"i"} },
+        { content: {$regex: keyWord, $options:"i"} },
+      ]
+    }).sort({
+      "time": -1
+    }).limit(limit).skip(skip).then((data) => {
+      list.record = data
+      list.total = count
+      list.limit = limit
+      res.send(list)
+      return next()
+    }).catch((err) => {
+      console.log("ERROR:" + err)
+    })
+  })
+})
+
+// 独白管理删除
+router.post('/admin/record/delete', (req, res, next) => {
+  let travelId = ObjectID(req.body.recordid)
+  Record.remove({
+    _id: travelId
+  }).then(() => {
+    resData.code = 0
+    resData.message = '删除成功'
+    res.send(resData)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 独白管理信息修改独白id
+router.post('/admin/record/which', (req, res, next) => {
+  let recordId = ObjectID(req.body.recordid)
+  Record.find({
+    _id: recordId
+  }).then((data) => {
+    res.send(data)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
+// 独白管理信息修改保存
+router.post('/admin/record/edit', (req, res, next) => {
+  let recordId = ObjectID(req.body.recordid)
+  let title = req.body.title
+  let spirit = req.body.spirit
+  let weather = req.body.weather
+  let content = req.body.content
+  Record.update({
+    _id: recordId
+  },{
+    $set: {
+      title : title,
+      spirit : spirit,
+      weather : weather,
+      content : content
+    }
+  }).then(() => {
+    resData.code = 0
+    resData.message = '修改成功'
+    res.send(resData)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
+
 // 珍藏管理列表
 router.post('/admin/travel/list', (req, res, next) => {
   let page = req.body.page || 1
@@ -532,7 +767,7 @@ router.post('/admin/travel/list', (req, res, next) => {
     let skip = (page - 1) * limit
     Travel.find({
     }).sort({
-      "leavetime": -1
+      "time": -1
     }).limit(limit).skip(skip).then((data) => {
       list.travel = data
       list.total = count
@@ -564,7 +799,7 @@ router.post('/admin/travel/search', (req, res, next) => {
         { content: {$regex: keyWord, $options:"i"} }, 
       ]
     }).sort({
-      "leavetime": -1
+      "time": -1
     }).limit(limit).skip(skip).then((data) => {
       list.travel = data
       list.total = count
@@ -606,42 +841,28 @@ router.post('/admin/travel/which', (req, res, next) => {
 })
 
 // 珍藏管理信息修改保存
-// router.post('/admin/travel/edit', (req, res, next) => {
-//   let userName = req.body.username
-//   let userPass = req.body.userpass
-//   let nickName = req.body.nickname
-//   let avatar   = req.body.avatar
-//   let safePass = req.body.safepass
-//   User.update({
-//     username: userName 
-//   },{
-//     $set: {
-//       userpass : userPass,
-//       nickname : nickName,
-//       avatar   : avatar,
-//       safepass : safePass
-//     }
-//   }).then(() => {
-//     Message.update({
-//       username: userName 
-//     },{
-//       $set: {
-//         nickname : nickName,
-//         avatar   : avatar,
-//       }
-//     },{
-//       multi: true,
-//       upsert: false
-//     }).then(() => {
-//       resData.code = 0
-//       resData.message = '修改成功'
-//       res.send(resData)
-//       return next()
-//     })
-//   }).catch((err) => {
-//     console.log("ERROR:" + err)
-//   })
-// })
+router.post('/admin/travel/edit', (req, res, next) => {
+  let travelId = ObjectID(req.body.travelid)
+  let title = req.body.title
+  let link = req.body.link
+  let content = req.body.content
+  Travel.update({
+    _id: travelId
+  },{
+    $set: {
+      title : title,
+      link : link,
+      content : content
+    }
+  }).then(() => {
+    resData.code = 0
+    resData.message = '修改成功'
+    res.send(resData)
+    return next()
+  }).catch((err) => {
+    console.log("ERROR:" + err)
+  })
+})
 
 // 留言管理列表
 router.post('/admin/message/list', (req, res, next) => {

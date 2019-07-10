@@ -127,12 +127,24 @@ export default {
     },
     // 文章页
     linkDetail (id) {
-      this.$router.push({
+      let className = document.documentElement.className
+      if(/mobile/.test(className)) {
+        this.$router.push({
+          name: 'detail',
+          params: {
+            id: id
+          }
+        })
+        return
+      }
+      // 详情页跳转
+      let noteJump = this.$router.resolve({
         name: 'detail',
         params: {
           id: id
         }
       })
+      window.open(noteJump.href, '_blank')
     },
     // 时间格式化
     formatTime (time, formate) {

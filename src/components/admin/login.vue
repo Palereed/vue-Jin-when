@@ -78,7 +78,7 @@ export default {
               // 登录表单重置
               this.$refs['login'].resetFields()
               // 进入后台管理
-              this.$router.push('/admin/data')
+              this.$router.push('/admin/user/list')
             } else {
               this.$message.error(res.data.message)
             }

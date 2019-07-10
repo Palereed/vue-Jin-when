@@ -322,7 +322,7 @@ export default {
     chooseAvatar (e) {
       let src = e.target.getAttribute('src')
       this.userInfoForm.avatar = src
-    },
+    }
   }
 }
 </script>

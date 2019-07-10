@@ -71,7 +71,8 @@ export default new Router({
       meta: { title: '喵管家', keepAlive: false },
       component: resolve => require(['components/admin/admin'], resolve),
       redirect: '/admin/data',
-      children: [{
+      children: [
+      {
         // 管家统计
         path: '/admin/data',
         meta: { title: '管家统计', keepAlive: false },

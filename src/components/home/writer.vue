@@ -78,7 +78,8 @@ export default {
         })
         return
       }
-      this.$router.push('/admin/login')
+      let windowJump = this.$router.resolve({ path: '/admin/login' })
+      window.open(windowJump.href, '_blank')
     }
   }
 }

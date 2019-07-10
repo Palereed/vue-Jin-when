@@ -29,7 +29,7 @@ export default {
   methods: {
     getDetail () {
       noteDetail(this.$route.params.id).then((res) => {
-        this.noteData = res.data[0]
+        this.noteData = res.data
       })
     },
     // 时间格式化
